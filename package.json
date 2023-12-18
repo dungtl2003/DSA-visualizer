@@ -1,0 +1,27 @@
+{
+    "name": "dsa-visualizer",
+    "version": "1.0.0",
+    "description": "visualizer app for data structure and algorithm",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+        "test": "echo \"no test specified\"",
+        "prepare": "husky install"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/dungtl2003/DSA-visualizer.git"
+    },
+    "author": "ilikeblue",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/dungtl2003/DSA-visualizer/issues"
+    },
+    "homepage": "https://github.com/dungtl2003/DSA-visualizer#readme",
+    "dependencies": {},
+    "devDependencies": {
+        "prettier": "3.1.1",
+        "lint-staged": "15.2.0",
+        "husky": "^8.0.0"
+    }
+}
