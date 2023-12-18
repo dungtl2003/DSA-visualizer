@@ -16,7 +16,7 @@ const config = {
     insertPragma: false,
     htmlWhitespaceSensitivity: "css",
     endOfLine: "lf",
-    embeddedLanguageFormatting: "auto",
+    embeddedLanguageFormatting: "off",
     singleAttributePerLine: false,
 };
 
