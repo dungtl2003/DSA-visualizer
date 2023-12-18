@@ -18,7 +18,9 @@
         "url": "https://github.com/dungtl2003/DSA-visualizer/issues"
     },
     "homepage": "https://github.com/dungtl2003/DSA-visualizer#readme",
-    "dependencies": {},
+    "dependencies": {
+        "express": "4.18.2"
+    },
     "devDependencies": {
         "prettier": "3.1.1",
         "lint-staged": "15.2.0",
