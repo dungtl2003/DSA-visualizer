@@ -1,0 +1,38 @@
+:root{
+    --theme-color: #04aa6d;
+    --shadow-color: #57a474;
+    --text-color: #ccc;
+    --white-color: #e7e9eb;
+    --black-color: #282a35;
+    
+    --header__navbar-height: 45px;
+    --header__catebar-height: calc(75px - var(--header__navbar-height));
+    --body__main-content-width: 80%;
+    --body__sidebar-width: calc(100% - var(--body__main-content-width));
+}
+
+html {
+    font-size: 62.5%;
+    line-height: 1.6rem;
+    font-family: 'Robuto', sans-serif;
+    box-sizing: border-box;
+}
+  
+*{
+    box-sizing: inherit;
+}
+
+.default-btn{
+    background-color: #04aa6d;
+    color: #fff;
+    border: none;
+    padding: 4px 5px;
+    opacity: 0.8;
+    cursor: pointer;
+    border-radius: 10%;
+    font-size: 1.4rem;
+}
+
+.default-btn:hover{
+    opacity: 1; 
+}
