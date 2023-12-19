@@ -1,5 +1,5 @@
 package-lock.json
 yarn.lock
 node_modules
-src/client/assets/font
+src/client/asset/font
 *.md
