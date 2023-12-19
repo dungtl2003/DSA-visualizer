@@ -1,10 +1,10 @@
-:root{
+:root {
     --theme-color: #04aa6d;
     --shadow-color: #57a474;
     --text-color: #ccc;
     --white-color: #e7e9eb;
     --black-color: #282a35;
-    
+
     --header__navbar-height: 45px;
     --header__catebar-height: calc(75px - var(--header__navbar-height));
     --body__main-content-width: 80%;
@@ -14,15 +14,15 @@
 html {
     font-size: 62.5%;
     line-height: 1.6rem;
-    font-family: 'Robuto', sans-serif;
+    font-family: "Robuto", sans-serif;
     box-sizing: border-box;
 }
-  
-*{
+
+* {
     box-sizing: inherit;
 }
 
-.default-btn{
+.default-btn {
     background-color: #04aa6d;
     color: #fff;
     border: none;
@@ -33,6 +33,6 @@ html {
     font-size: 1.4rem;
 }
 
-.default-btn:hover{
-    opacity: 1; 
+.default-btn:hover {
+    opacity: 1;
 }
