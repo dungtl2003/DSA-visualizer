@@ -6,6 +6,8 @@ const router = express.Router();
 
 router.use((req, res, next) => {
     console.log(`Time: ${new Date().toJSON()}`);
+    console.log(`Request: ${req}`);
+    console.log(`Respone: ${res}`);
     next();
 });
 
