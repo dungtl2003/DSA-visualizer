@@ -59,13 +59,13 @@
             <div class="body__sidebar">
                 <span class="body__sidebar__param-display"
                     >Columns:
-                    <span id="body__sidebar__col-num">12</span>
+                    <span id="body__sidebar__col-num">50</span>
                 </span>
                 <input
                     type="range"
-                    min="5"
-                    max="20"
-                    value="12"
+                    min="0"
+                    max="150"
+                    value="50"
                     class="slider"
                     id="body__sidebar__slider"
                 />
@@ -105,26 +105,5 @@
             integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
             crossorigin="anonymous"
         ></script>
-        <script type="text/javascript">
-            var slider = document.getElementById("body__sidebar__slider");
-            var output = document.getElementById("body__sidebar__col-num");
-            output.innerHTML = slider.value;
-
-            slider.oninput = function () {
-                output.innerHTML = this.value;
-            };
-
-            $(function () {
-                $(".body__main-content__display__col").each(function () {
-                    var percentage = $(this).data("percentage");
-                    $(this).animate(
-                        {
-                            height: percentage + "%",
-                        },
-                        1500
-                    );
-                });
-            });
-        </script>
     </body>
 </html>

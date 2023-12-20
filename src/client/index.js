@@ -1,8 +1,12 @@
 "use strict";
 
-import "./asset/font/fontawesome-free-6.4.2-web/css/all.min.css";
-import "./asset/css/base.css";
-import "./asset/css/main.css";
-import { generateArray } from "./common/utils.js";
+import "./common/setDefault.js";
+import { drawColumns } from "./common/utils/array.js";
 
-generateArray(150);
+const slider = document.getElementById("body__sidebar__slider");
+const colNumberDisplay = document.getElementById("body__sidebar__col-num");
+
+slider.onchange = function () {
+    colNumberDisplay.innerHTML = this.value;
+    drawColumns(Number(this.value));
+};
