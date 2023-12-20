@@ -3,11 +3,6 @@
 const columnContainer = document.getElementById(
     "body__main-content__display__frame"
 );
-const colNumberDisplay = document.getElementById("body__sidebar__col-num");
-const slider = document.getElementById("body__sidebar__slider");
-const column = document.getElementsByClassName(
-    "body__main-content__display__col"
-);
 const animateDuration = 1500;
 
 /**
@@ -34,7 +29,8 @@ const createColumn = function (dataPercentage) {
  * @param {Number} end      The maximum height of the column
  * @returns {void}
  */
-const drawColumn = function (columns, start = 10, end = 100) {
+const drawColumns = function (columns, start = 10, end = 100) {
+    //create
     const elements = new Array(columns)
         .fill(0)
         .map(() =>
@@ -44,6 +40,7 @@ const drawColumn = function (columns, start = 10, end = 100) {
     columnContainer.replaceChildren();
     elements.forEach((e) => columnContainer.appendChild(e));
 
+    //draw
     $(function () {
         $(".body__main-content__display__col").each(function () {
             $(this).animate(
@@ -56,13 +53,4 @@ const drawColumn = function (columns, start = 10, end = 100) {
     });
 };
 
-/**
- * Comming soon
- * @returns {void}
- */
-const generateColumns = function () {
-    colNumberDisplay.innerHTML = slider.value;
-    drawColumn(Number(slider.value));
-};
-
-export { drawColumn, generateColumns };
+export { drawColumns };

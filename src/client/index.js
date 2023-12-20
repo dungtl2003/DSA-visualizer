@@ -1,10 +1,12 @@
 "use strict";
 
-import "./common/default.js";
-import { drawColumn, generateColumns } from "./common/utils.js";
+import "./common/setDefault.js";
+import { drawColumns } from "./common/utils/array.js";
 
 const slider = document.getElementById("body__sidebar__slider");
+const colNumberDisplay = document.getElementById("body__sidebar__col-num");
 
 slider.onchange = function () {
-    generateColumns();
+    colNumberDisplay.innerHTML = this.value;
+    drawColumns(Number(this.value));
 };
