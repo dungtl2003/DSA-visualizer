@@ -6,7 +6,8 @@
     "type": "module",
     "scripts": {
         "test": "echo \"no test specified\"",
-        "prepare": "husky install"
+        "prepare": "husky install",
+        "build": "rm -rf ./dist && npx webpack"
     },
     "repository": {
         "type": "git",
@@ -18,10 +19,17 @@
         "url": "https://github.com/dungtl2003/DSA-visualizer/issues"
     },
     "homepage": "https://github.com/dungtl2003/DSA-visualizer#readme",
-    "dependencies": {},
+    "dependencies": {
+        "express": "4.18.2"
+    },
     "devDependencies": {
         "prettier": "3.1.1",
         "lint-staged": "15.2.0",
-        "husky": "^8.0.0"
+        "husky": "^8.0.0",
+        "webpack": "5.89.0",
+        "webpack-cli": "5.1.4",
+        "css-loader": "6.8.1",
+        "style-loader": "3.3.3",
+        "html-webpack-plugin": "5.5.4"
     }
 }

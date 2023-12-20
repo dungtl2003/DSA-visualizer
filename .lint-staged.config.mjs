@@ -1,5 +1,5 @@
 const config = {
-    "**/*.{js, jsx, json, md}": ["prettier --write ."],
+    "**/*.{js, jsx, json, md, css, scss}": ["prettier --write"],
 };
 
 export default config;
