@@ -1,5 +1,5 @@
-import { fileURLToPath } from "url";
-import { dirname } from "path";
+import {fileURLToPath} from "url";
+import {dirname} from "path";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -14,12 +14,12 @@ const config = {
         path: __dirname + "/dist/sort",
     },
     module: {
-        rules: [{ test: /\.css$/, use: ["style-loader", "css-loader"] }],
+        rules: [{test: /\.css$/, use: ["style-loader", "css-loader"]}],
     },
     plugins: [
         new HtmlWebpackPlugin({
             title: "Webpack App",
-            filename: "index.html",
+            filename: "[name].html",
             template: "src/client/index.html",
         }),
     ],
