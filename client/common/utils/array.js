@@ -53,4 +53,4 @@ const drawColumns = function (columns, start = 10, end = 100) {
     });
 };
 
-export { drawColumns };
+export {drawColumns};

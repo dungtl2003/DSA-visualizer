@@ -1,7 +1,7 @@
 import "../asset/font/fontawesome-free-6.4.2-web/css/all.min.css";
 import "../asset/css/base.css";
 import "../asset/css/main.css";
-import { drawColumns } from "./utils/array.js";
+import {drawColumns} from "./utils/array.js";
 
 const sliderDefaultValue = 50;
 const sliderMaxColsNumber = 150;
