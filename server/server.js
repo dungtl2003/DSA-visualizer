@@ -1,5 +1,6 @@
 "use strict";
 
+import logger from "../config/logger.js";
 import express from "express";
 import sort from "./route/sorting.js";
 
@@ -18,5 +19,5 @@ app.get("/", (req, res) => {
 app.use("/sort", sort);
 
 app.listen(port, () => {
-    console.log(`App is listening on port ${port}`);
+    logger.info(`App is listening on port ${port}`);
 });
