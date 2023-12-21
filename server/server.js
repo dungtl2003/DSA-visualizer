@@ -8,7 +8,8 @@ const app = express();
 const port = 3000;
 
 app.all("/", (req, res, next) => {
-    console.log("Get here first");
+    // logger.debug(`Request: ${Object.entries(req)}`);
+    // logger.debug(`Respone: ${Object.entries(res)}`);
     next();
 });
 
