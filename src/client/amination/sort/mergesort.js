@@ -1,41 +1,55 @@
-const sleepTime = 3000;
-const animateDuration = 1500;
+const duration = 1000;
 
 const columnContainer = document.getElementById(
     "body__main-content__display__frame"
 );
 
-const drawColumn = function (columnElement) {
-    $(columnElement).animate(
+/**
+ * Draw the column element
+ * @param   {HTMLLIElement} column The column element
+ * @returns {void}
+ */
+const draw = function (column) {
+    $(column.childNodes[0]).animate(
         {
-            height: columnElement.getAttribute("data-percentage") + "%",
+            height: column.childNodes[0].getAttribute("data-percentage") + "%",
         },
-        animateDuration
+        duration
     );
 };
 
-const paintColumn = function (column, color, time) {
+/**
+ * Change color of the column to `color` for `duration` time
+ * @param   {HTMLLIElement} column  The column element
+ * @param   {String}        color   Color to paint the column
+ * @returns {void}
+ */
+const paint = function (column, color) {
     const oldColor = column.getAttribute("background-color");
+
     column.style.background = color;
     setTimeout(() => {
         column.style.background = oldColor;
-    }, time);
+    }, duration);
 };
 
-const sleep = async () => {
-    setTimeout(() => {}, sleepTime);
-};
-
-const compare = async function (instruction, columns) {
+/**
+ * Handle the compare amination
+ * @param   {Object}                  instruction   The instruction to animate
+ * @param   {Array<HTMLLIElement>}    columns       List of column elements
+ * @param   {String}                  color         Color to paint both the columns
+ * @returns {void}
+ */
+const compare = function (instruction, columns, color = "red") {
     if (instruction.p1 !== -1) {
-        paintColumn(columns[instruction.p1].childNodes[0], "red", sleepTime);
+        paint(columns[instruction.p1].childNodes[0], color, duration);
     }
     if (instruction.p2 !== -1) {
-        paintColumn(columns[instruction.p2].childNodes[0], "red", sleepTime);
+        paint(columns[instruction.p2].childNodes[0], color, duration);
     }
 };
 
-const divide = async function (instruction, columns) {
+const divide = function (instruction, columns) {
     // columns[instruction.start].setAttribute("background-color", "yellow");
     // columns[instruction.mid].setAttribute("background-color", "yellow");
     // columns[instruction.mid + 1].setAttribute("background-color", "blue");
@@ -43,41 +57,64 @@ const divide = async function (instruction, columns) {
     // sleep();
 };
 
-const merge = async function (instruction, columns) {
+/**
+ * Handle the merge amination
+ * @param   {Object}                  instruction   The instruction to animate
+ * @param   {Array<HTMLLIElement>}    columns       List of column elements
+ * @returns {void}
+ */
+const merge = function (instruction, columns) {
     let dataIndex = 0;
-    for (let i = instruction.start; i <= instruction.end; i++) {
-        columns[i].setAttribute(
+    const values = instruction.values;
+    const start = instruction.start;
+    const end = start + values.length - 1;
+    for (let i = start; i <= end; i++) {
+        console.log(values[dataIndex]);
+        columns[i].childNodes[0].setAttribute(
             "data-percentage",
-            instruction.values[dataIndex++]
+            values[dataIndex++]
         );
-        drawColumn(columns[index]);
+        console.log(columns[i].childNodes[0].getAttribute("data-percentage"));
+        draw(columns[i]);
     }
 };
 
-const executeAsync = async (instruction) => {
+/**
+ * Handle animation following the `instruction`
+ * @param   {Object}        instruction   The instruction to animate
+ * @returns {Promise}
+ */
+const handle = async function (instruction) {
     let columns = columnContainer.children;
-    switch (instruction.type) {
-        case "divide":
-            await divide(instruction, columns);
-            break;
-        case "compare":
-            await compare(instruction, columns);
-            break;
-        case "merge":
-            console.log("merge");
-            await merge(instruction, columns);
-            break;
-    }
+
+    return new Promise((resolve) => {
+        switch (instruction.type) {
+            case "divide":
+                divide(instruction, columns);
+                break;
+            case "compare":
+                compare(instruction, columns);
+                break;
+            case "merge":
+                merge(instruction, columns);
+                break;
+        }
+
+        setTimeout(() => {
+            resolve();
+        }, duration);
+    });
 };
 
-const runSortingAnimation = async function (instructions) {
-    const date = new Date();
-    const start = date.getSeconds();
+/**
+ * Run animation of all `instructions`
+ * @param   {Array<Object>}     instructions   All instructions to follow
+ * @returns {void}
+ */
+const animation = async function (instructions) {
     for (const instruction of instructions) {
-        await executeAsync(instruction);
-        await sleep();
+        await handle(instruction);
     }
-    console.log("Execute time", date.getSeconds() - start);
 };
 
-export default runSortingAnimation;
+export default animation;

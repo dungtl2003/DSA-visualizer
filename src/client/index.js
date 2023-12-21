@@ -3,7 +3,7 @@
 import "./common/setDefault.js";
 import {drawColumns} from "./common/utils/array.js";
 import mergesort from "./components/sort/mergesort.js";
-import runSortingAnimation from "./amination/sort/mergesort.js";
+import mergesortAmination from "./amination/sort/mergesort.js";
 
 const slider = document.getElementById("body__sidebar__slider");
 const colNumberDisplay = document.getElementById("body__sidebar__col-num");
@@ -21,8 +21,10 @@ btn.addEventListener("click", function (e) {
     const values = [];
     const children = columnContainer.children;
     for (const child of children) {
-        values.push(Number(child.getAttribute("data-percentage")));
+        values.push(
+            Number(child.childNodes[0].getAttribute("data-percentage"))
+        );
     }
     const instructions = mergesort(values);
-    runSortingAnimation(instructions);
+    mergesortAmination(instructions);
 });
