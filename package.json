@@ -8,8 +8,8 @@
         "test": "echo \"no test specified\"",
         "prepare": "husky install",
         "build": "rm -rf ./dist && npx webpack",
-        "start:dev": "node -r dotenv/config server/server.js dotenv_config_path=./.env/.development.env dotenv_config_debug-true override=true",
-        "start:prod": "node -r dotenv/config server/server.js dotenv_config_path=./.env/.production.env dotenv_config_debug-true override=true"
+        "start:dev": "npm run build && node -r dotenv/config server/server.js dotenv_config_path=./.env/.development.env dotenv_config_debug-true override=true",
+        "start:prod": "npm run build && node -r dotenv/config server/server.js dotenv_config_path=./.env/.production.env dotenv_config_debug-true override=true"
     },
     "repository": {
         "type": "git",

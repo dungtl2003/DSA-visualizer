@@ -19,7 +19,7 @@ const config = {
     plugins: [
         new HtmlWebpackPlugin({
             title: "Webpack App",
-            filename: "[name].html",
+            filename: "index.html",
             template: "client/index.html",
         }),
     ],

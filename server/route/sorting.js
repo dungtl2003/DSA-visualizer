@@ -1,16 +1,15 @@
 "use strict";
 
 import express from "express";
+import path from "path";
 
+const HOME_PATH = process.env.NODE_ROOT;
 const router = express.Router();
 
-router.use((req, res, next) => {
-    console.log(`Time: ${new Date().toJSON()}`);
-    next();
-});
+router.use(express.static(path.join(HOME_PATH, "dist", "sort")));
 
 router.get("/", (req, res) => {
-    res.send("Main sorting page");
+    res.sendFile("index.html", {root: path.join(HOME_PATH, "dist", "sort")});
 });
 
 router.get("/about", (req, res) => {
