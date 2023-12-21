@@ -161,7 +161,7 @@ const conquer = function (instructions, src, target, h, nonDecrease = true) {
  * @param   {Boolean}       nonDecrease     Determine the sort order of the array
  * @returns {Array<Object>} The instruction of how to mergesort given array
  */
-const mergeSort = function (arr, nonDecrease = true) {
+const mergesort = function (arr, nonDecrease = true) {
     const instructions = [];
 
     const length = arr.length;
@@ -176,7 +176,8 @@ const mergeSort = function (arr, nonDecrease = true) {
         h *= 2;
     }
 
+    console.log(instructions);
     return instructions;
 };
 
-export default mergeSort;
+export default mergesort;
