@@ -1,5 +1,4 @@
 const duration = 1000;
-
 const columnContainer = document.getElementById(
     "body__main-content__display__frame"
 );
@@ -49,12 +48,31 @@ const compare = function (instruction, columns, color = "red") {
     }
 };
 
-const divide = function (instruction, columns) {
-    // columns[instruction.start].setAttribute("background-color", "yellow");
-    // columns[instruction.mid].setAttribute("background-color", "yellow");
-    // columns[instruction.mid + 1].setAttribute("background-color", "blue");
-    // columns[instruction.end].setAttribute("background-color", "blue");
-    // sleep();
+/**
+ * Handle the divide amination
+ * @param   {Object}                  instruction   The instruction to animate
+ * @param   {Array<HTMLLIElement>}    columns       List of column elements
+ * @param   {String}                  color1        Color to paint columns in the first sub-array
+ * @param   {String}                  color2        Color to paint columns in the second sub-array
+ * @returns {void}
+ */
+const divide = function (
+    instruction,
+    columns,
+    color1 = "yellow",
+    color2 = "blue"
+) {
+    const start = instruction.start;
+    const mid = instruction.mid;
+    const end = instruction.end;
+
+    for (let i = start; i <= mid; i++) {
+        paint(columns[i].childNodes[0], color1);
+    }
+
+    for (let i = mid + 1; i <= end; i++) {
+        paint(columns[i].childNodes[0], color2);
+    }
 };
 
 /**
@@ -68,13 +86,12 @@ const merge = function (instruction, columns) {
     const values = instruction.values;
     const start = instruction.start;
     const end = start + values.length - 1;
+
     for (let i = start; i <= end; i++) {
-        console.log(values[dataIndex]);
         columns[i].childNodes[0].setAttribute(
             "data-percentage",
             values[dataIndex++]
         );
-        console.log(columns[i].childNodes[0].getAttribute("data-percentage"));
         draw(columns[i]);
     }
 };

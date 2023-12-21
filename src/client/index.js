@@ -10,21 +10,22 @@ const colNumberDisplay = document.getElementById("body__sidebar__col-num");
 const columnContainer = document.getElementById(
     "body__main-content__display__frame"
 );
-const btn = document.getElementById("body__sidebar__btn-item--solve");
+const btnSolve = document.getElementById("body__sidebar__btn-item--solve");
 
 slider.onchange = function () {
     colNumberDisplay.innerHTML = this.value;
     drawColumns(Number(this.value));
 };
 
-btn.addEventListener("click", function (e) {
+btnSolve.addEventListener("click", function () {
     const values = [];
-    const children = columnContainer.children;
-    for (const child of children) {
+
+    for (const child of columnContainer.children) {
         values.push(
             Number(child.childNodes[0].getAttribute("data-percentage"))
         );
     }
+
     const instructions = mergesort(values);
     mergesortAmination(instructions);
 });
