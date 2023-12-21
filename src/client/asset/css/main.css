@@ -1,6 +1,3 @@
-.header {
-}
-
 .body {
     display: flex;
     flex-direction: row;
@@ -190,6 +187,6 @@
 
 .body__sidebar__btn-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     margin-top: 20px;
 }

@@ -23,10 +23,19 @@ const draw = function (column) {
  * @param   {String}        color   Color to paint the column
  * @returns {void}
  */
-const paint = function (column, color) {
-    const oldColor = column.getAttribute("background-color");
+const paint = function (
+    column,
+    columnBgColor,
+    columnShadowColor,
+    hoverBgColor,
+    hoverShadowColor,
+    time
+) {
+    const oldBackGroundColor = column.getAttribute("background-color");
+    // const old
+    column.style.background = columnBgColor;
+    column.style.boxShadow = columnShadowColor;
 
-    column.style.background = color;
     setTimeout(() => {
         column.style.background = oldColor;
     }, duration);
