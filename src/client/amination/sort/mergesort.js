@@ -1,21 +1,9 @@
+import {draw} from "../../common/array.js";
+
 const duration = 1000;
 const columnContainer = document.getElementById(
     "body__main-content__display__frame"
 );
-
-/**
- * Draw the column element
- * @param   {HTMLLIElement} column The column element
- * @returns {void}
- */
-const draw = function (column) {
-    $(column.childNodes[0]).animate(
-        {
-            height: column.childNodes[0].getAttribute("data-percentage") + "%",
-        },
-        duration
-    );
-};
 
 /**
  * Change color of the column to `color` for `duration` time
@@ -23,22 +11,32 @@ const draw = function (column) {
  * @param   {String}        color   Color to paint the column
  * @returns {void}
  */
-const paint = function (
-    column,
-    columnBgColor,
-    columnShadowColor,
-    hoverBgColor,
-    hoverShadowColor,
-    time
-) {
-    const oldBackGroundColor = column.getAttribute("background-color");
-    // const old
-    column.style.background = columnBgColor;
-    column.style.boxShadow = columnShadowColor;
+const paint = function (column, columnBgColor, time) {
+    switchColumnColor(columnBgColor, column);
 
     setTimeout(() => {
-        column.style.background = oldColor;
+        switchColumnColor(columnBgColor, column);
     }, duration);
+};
+
+const switchColumnColor = function (color, column) {
+    switch (color) {
+        case "red":
+            column.classList.toggle(
+                "body__main-content__display__col--turn-red"
+            );
+            break;
+        case "blue":
+            column.classList.toggle(
+                "body__main-content__display__col--turn-blue"
+            );
+            break;
+        case "yellow":
+            column.classList.toggle(
+                "body__main-content__display__col--turn-yellow"
+            );
+            break;
+    }
 };
 
 /**
@@ -101,7 +99,7 @@ const merge = function (instruction, columns) {
             "data-percentage",
             values[dataIndex++]
         );
-        draw(columns[i]);
+        draw(columns[i].childNodes[0], duration);
     }
 };
 

@@ -176,7 +176,6 @@ const mergesort = function (arr, nonDecrease = true) {
         h *= 2;
     }
 
-    console.log(instructions);
     return instructions;
 };
 

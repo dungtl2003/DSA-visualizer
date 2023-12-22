@@ -53,22 +53,36 @@
                             class="body__main-content__display__frame"
                             id="body__main-content__display__frame"
                         ></ul>
+                        <div
+                            id="body__main-content__display__values"
+                            class="body__main-content__display__values"
+                        >
+                            Values: <span></span>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="body__sidebar">
                 <span class="body__sidebar__param-display"
                     >Columns:
-                    <span id="body__sidebar__col-num"></span>
+                    <form action="" id="body__sidebar__param-display__form">
+                        <input
+                            type="number"
+                            id="body__sidebar__col-num"
+                            autocomplete="on"
+                            required
+                        />
+                    </form>
                 </span>
-                <input
-                    type="range"
-                    min=""
-                    max=""
-                    value=""
-                    class="slider"
-                    id="body__sidebar__slider"
-                />
+                <form id="body__sidebar__form">
+                    <input
+                        type="range"
+                        class="slider"
+                        min=""
+                        max=""
+                        id="body__sidebar__slider"
+                    />
+                </form>
                 <div class="body__sidebar__param-display">
                     Moves: <span id="body__sidebar__moves-num">0</span>
                 </div>
