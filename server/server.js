@@ -1,19 +1,23 @@
 "use strict";
 
+import path from "path";
 import logger from "../config/logger.js";
 import express from "express";
-import sort from "./route/sorting.js";
 
+const HOME_PATH = process.env.NODE_ROOT;
 const PORT = process.env.PORT;
 
 const app = express();
 
+// serve static files
+app.use("/", express.static(path.join(HOME_PATH, "dist")));
+
+// serve main page
 app.get("/", (req, res) => {
-    res.send("Hello world");
+    res.sendFile("index.html", {root: path.join(HOME_PATH, "dist")});
 });
 
-app.use("/sort", sort);
-
+// expose port
 app.listen(PORT, () => {
     logger.info(`App is listening on port ${PORT}`);
 });

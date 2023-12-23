@@ -3,17 +3,16 @@
 import {format, createLogger, transports} from "winston";
 const {combine, timestamp, label, printf} = format;
 
+const ENVIRONMENT = process.env.NODE_ENV;
+const LEVEL = process.env.LOGGING_LEVEL;
+
 const myFormat = printf(({level, message, label, timestamp}) => {
     return `${timestamp} [${label}] ${level.toUpperCase()}: ${message}`;
 });
 
 const logger = createLogger({
-    level: "debug",
-    format: combine(
-        label({label: process.env.NODE_ENV}),
-        timestamp(),
-        myFormat
-    ),
+    level: LEVEL,
+    format: combine(label({label: ENVIRONMENT}), timestamp(), myFormat),
     transports: [
         //
         // - Write all logs with importance level of `error` or less to `error.log`
@@ -25,10 +24,9 @@ const logger = createLogger({
 });
 
 //
-// If we're not in production then log to the `console` with the format:
-// `${info.level}: ${info.message} JSON.stringify({ ...rest }) `
+// If we're not in production then log to the `console` with the format
 //
-if (process.env.NODE_ENV !== "production") {
+if (ENVIRONMENT !== "production") {
     logger.add(new transports.Console({}));
 }
 
