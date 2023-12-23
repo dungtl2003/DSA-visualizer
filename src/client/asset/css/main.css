@@ -25,8 +25,13 @@
 }
 
 /* BODY-MAIN-CONTENT */
-.body__main-content {
+.body__main-container{
     width: var(--body__main-content-width);
+}
+
+.body__main-content {
+    width: 900px;
+    margin: 0 auto;
     padding-left: 20px;
     padding-right: 20px;
     padding-top: 10px;
@@ -36,36 +41,81 @@
     font-size: 3rem;
 }
 
-.body__main-content__scroll-btn {
-    padding-left: 20px;
-    padding-right: 20px;
+#body__main-content__scroll-btn--right, 
+#body__main-content__scroll-btn--left  {
+    position: absolute;
+    color: var(--white-color);
+    font-size: 1.4rem;
+    padding: 10px;
+    cursor: pointer;
+}
+
+#body__main-content__scroll-btn--right{
+    right: 20px;
+    background: linear-gradient(to right, transparent, #2e2e41 80%);
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+
+#body__main-content__scroll-btn--left{
+    left: 20px;
+    background: linear-gradient(to left, transparent, #2e2e41 80%);
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
 }
 
 .body__main-content__display {
     width: 100%;
 }
 
-.body__main-content__selection-container {
+.body__main-content__selection-container{
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    margin-top: 40px;
+    justify-content: center;
+    max-width: fit-content;
+    margin: 0 auto;
 
     padding-right: 20px;
     padding-left: 20px;
+    width: 100%;
+    position: relative;
 }
 
-.type-selection {
-    font-size: 1.6rem;
+.type-selection{
+    max-width: 770px;
+    background-color: rgba(2,2,2,0.6);
+    padding : 5px 10px;
+    border-bottom: 1px solid #434354;
+    border-radius: 50px;
+    display: flex;
+    white-space: nowrap;
+    overflow: scroll;
+    scroll-behavior: smooth;
+    box-shadow: 0px 5px 15px rgba(2,2,2,0.3);
 }
 
-.type-selection__item {
+.type-selection::-webkit-scrollbar{
+    display: none;
+}
+
+.type-selection__item{
+    color: var(--white-color);
+    text-align: center;
     text-decoration: none;
-    margin-left: 10px;
-    margin-right: 10px;
-    font-weight: 600;
+    font-weight: 500;
+    font-size: 1.4rem;    
+    border-radius: 30px;
+    margin: 0 2px;
+    padding: 2px 8px;
+    display: inline-block;
+    text-wrap: nowrap;
 }
+
+.type-selection__item:not(.type-selection__item--activate):hover{
+    color: var(--black-color);
+    background-color: var(--white-color);
+}
+
 
 .body__main-content__display {
     display: flex;
@@ -212,4 +262,8 @@
     justify-content: space-around;
     margin-top: 20px;
 }
+
+
+
+
 

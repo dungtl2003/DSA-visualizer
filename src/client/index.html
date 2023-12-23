@@ -32,32 +32,70 @@
         </div>
 
         <div class="body">
-            <div class="body__main-content">
-                <h1 class="body__main-content__heading">Sorting Algorithms</h1>
-                <div class="body__main-content__selection-container">
-                    <span class="default-btn body__main-content__scroll-btn">
-                        <i class="fa-solid fa-arrow-left"></i>
-                    </span>
-                    <div class="type-selection">
-                        <a href="" class="type-selection__item">Quick Sort</a>
-                        <a href="" class="type-selection__item">Merge Sort</a>
-                        <a href="" class="type-selection__item">Heap Sort</a>
+            <div class="body__main-container">
+                <div class="body__main-content">
+                    <h1 class="body__main-content__heading">
+                        Sorting Algorithms
+                    </h1>
+                    <div
+                        class="body__main-content__selection-container"
+                        id="body__main-content__selection-container"
+                    >
+                        <i
+                            class="fa-solid fa-less-than"
+                            id="body__main-content__scroll-btn--left"
+                        ></i>
+                        <div class="type-selection" id="type-selection">
+                            <a
+                                href="#"
+                                class="type-selection__item type-selection__item--activate"
+                                >Merge Sort</a
+                            >
+                            <a href="#" class="type-selection__item"
+                                >Quick Sort</a
+                            >
+                            <a href="#" class="type-selection__item"
+                                >Heap Sort</a
+                            >
+                            <a href="#" class="type-selection__item"
+                                >Bubble Sort</a
+                            >
+                            <a href="#" class="type-selection__item"
+                                >Sellection Sort</a
+                            >
+                            <a href="#" class="type-selection__item"
+                                >Insertion Sort</a
+                            >
+                            <a href="#" class="type-selection__item"
+                                >Radix Sort</a
+                            >
+                            <a href="#" class="type-selection__item"
+                                >Shell Sort</a
+                            >
+                            <a href="#" class="type-selection__item"
+                                >Cocktail Shaker Sort</a
+                            >
+                            <a href="#" class="type-selection__item"
+                                >Gnome Sort</a
+                            >
+                        </div>
+                        <i
+                            class="fa-solid fa-greater-than"
+                            id="body__main-content__scroll-btn--right"
+                        ></i>
                     </div>
-                    <span class="default-btn body__main-content__scroll-btn">
-                        <i class="fa-solid fa-arrow-right"></i>
-                    </span>
-                </div>
-                <div class="body__main-content__main-section">
-                    <div class="body__main-content__display">
-                        <ul
-                            class="body__main-content__display__frame"
-                            id="body__main-content__display__frame"
-                        ></ul>
-                        <div
-                            id="body__main-content__display__values"
-                            class="body__main-content__display__values"
-                        >
-                            Values: <span></span>
+                    <div class="body__main-content__main-section">
+                        <div class="body__main-content__display">
+                            <ul
+                                class="body__main-content__display__frame"
+                                id="body__main-content__display__frame"
+                            ></ul>
+                            <div
+                                id="body__main-content__display__values"
+                                class="body__main-content__display__values"
+                            >
+                                Values: <span></span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -78,8 +116,6 @@
                     <input
                         type="range"
                         class="slider"
-                        min=""
-                        max=""
                         id="body__sidebar__slider"
                     />
                 </form>
