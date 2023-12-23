@@ -17,6 +17,13 @@ const sidebarForm = document.getElementById("body__sidebar__form");
 const colNumForm = document.getElementById(
     "body__sidebar__param-display__form"
 );
+const btnScrollLeft = document.getElementById(
+    "body__main-content__scroll-btn--left"
+);
+const btnScrollRight = document.getElementById(
+    "body__main-content__scroll-btn--right"
+);
+const selectionContainer = document.getElementById("type-selection");
 let curColNumber = sliderDefaultValue;
 
 window.onpageshow = function (event) {
@@ -95,5 +102,32 @@ const mouseHoverColumnEvent = function () {
             });
         });
 };
-
 mouseHoverColumnEvent();
+
+// Event: Scroll navbar
+const iconVisibility = () => {
+    const scrollLeftValue = Math.ceil(selectionContainer.scrollLeft);
+    const scrollAble =
+        Math.ceil(selectionContainer.scrollWidth) -
+        Math.ceil(selectionContainer.clientWidth);
+
+    console.log(i + " : " + scrollLeftValue);
+    i++;
+
+    btnScrollLeft.style.display = scrollLeftValue > 0 ? "block" : "none";
+    btnScrollRight.style.display =
+        scrollAble > scrollLeftValue ? "block" : "none";
+};
+let i = 0;
+btnScrollRight.addEventListener("click", () => {
+    selectionContainer.scrollLeft += 220;
+    console.log(i + " : " + selectionContainer.scrollLeft);
+    iconVisibility();
+});
+
+btnScrollLeft.addEventListener("click", () => {
+    selectionContainer.scrollLeft -= 110;
+    iconVisibility();
+});
+
+iconVisibility();

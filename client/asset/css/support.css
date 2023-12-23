@@ -59,3 +59,7 @@
     left: 0;
     top: -14px;
 }  */
+
+.type-selection__item--activate{
+    background-color: black;
+}
