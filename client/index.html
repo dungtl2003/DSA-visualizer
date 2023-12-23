@@ -39,29 +39,33 @@
             <div class="body__main-content__main-section">
                 <div class="body__main-content__display">
                     <ul class="body__main-content__display__frame" id="body__main-content__display__frame"></ul>
+                    <div id="body__main-content__display__values" class="body__main-content__display__values">
+                        Values: <span></span>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="body__sidebar">
             <span class="body__sidebar__param-display">Columns:
-                <span id="body__sidebar__col-num">50</span>
+                <form action="" id="body__sidebar__param-display__form">
+                    <input type="number" id="body__sidebar__col-num" autocomplete="on" required />
+                </form>
             </span>
-            <input type="range" min="0" max="150" value="50" class="slider" id="body__sidebar__slider" />
+            <form id="body__sidebar__form">
+                <input type="range" class="slider" min="" max="" id="body__sidebar__slider" />
+            </form>
             <div class="body__sidebar__param-display">
                 Moves: <span id="body__sidebar__moves-num">0</span>
             </div>
 
             <div class="body__sidebar__btn-container">
-                <button class="default-btn body__sidebar__btn-item--restart">
-                    Restart
-                </button>
-                <button class="default-btn body__sidebar__btn-item--shuffle">
+                <button class="default-btn body__sidebar__btn-item--shuffle" id="body__sidebar__btn-item--shuffle">
                     Shuffle
                 </button>
-                <button class="default-btn body__sidebar__btn-item--log">
+                <button class="default-btn body__sidebar__btn-item--log" id="body__sidebar__btn-item--log">
                     Log
                 </button>
-                <button class="default-btn body__sidebar__btn-item--solve">
+                <button class="default-btn body__sidebar__btn-item--solve" id="body__sidebar__btn-item--solve">
                     Solve
                 </button>
             </div>
