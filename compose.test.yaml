@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  dsa_visualizer:
+    image: ilikeblue/dsa_visualizer:latest
+    build:
+      context: .
+    ports:
+      - "8080:80"
+    env_file:
+      - ./.env/.production/app.env

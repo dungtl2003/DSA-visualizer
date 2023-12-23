@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  dsa_visualizer:
+    build:
+      context: .
+    ports:
+      - "8080:80"
+    env_file:
+      - ./.env/.production/app.env
+    volumes:
+      - ./server:/home/app/server
+      - ./dist:/home/app/dist

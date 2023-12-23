@@ -1,0 +1,6 @@
+version: "3"
+
+services:
+  dsa_visualizer:
+    container_name: dsa
+    image: ilikeblue/dsa_visualizer:latest
