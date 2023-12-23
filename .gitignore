@@ -131,4 +131,4 @@ dist
 
 # other
 dist
-.env/.production.env
+.env/.production/app.env
