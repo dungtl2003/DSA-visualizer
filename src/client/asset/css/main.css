@@ -89,7 +89,7 @@
     border-radius: 50px;
     display: flex;
     white-space: nowrap;
-    overflow: scroll;
+    overflow-x: scroll;
     scroll-behavior: smooth;
     box-shadow: 0px 5px 15px rgba(2,2,2,0.3);
 }

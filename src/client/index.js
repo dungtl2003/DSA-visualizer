@@ -101,29 +101,35 @@ const addColMouseEvent = function () {
 addColMouseEvent();
 
 // Event: Scroll navbar
+const scrollAble =
+    Math.ceil(selectionContainer.scrollWidth) -
+    Math.ceil(selectionContainer.clientWidth);
+let left = 0;
+let right = 0;
+
 const iconVisibility = () => {
-    const scrollLeftValue = Math.ceil(selectionContainer.scrollLeft);
-    const scrollAble =
-        Math.ceil(selectionContainer.scrollWidth) -
-        Math.ceil(selectionContainer.clientWidth);
+    const scrollValue = Math.ceil(selectionContainer.scrollLeft);
+    console.log(scrollValue);
 
-    console.log(i + " : " + scrollLeftValue);
-    i++;
-
-    scrollLeftBtn.style.display = scrollLeftValue > 0 ? "block" : "none";
-    scrollRightBtn.style.display =
-        scrollAble > scrollLeftValue ? "block" : "none";
+    scrollLeftBtn.style.display = scrollValue > 0 ? "block" : "none";
+    scrollRightBtn.style.display = scrollAble > scrollValue ? "block" : "none";
 };
-let i = 0;
 scrollRightBtn.addEventListener("click", () => {
-    selectionContainer.scrollLeft += 220;
-    console.log(i + " : " + selectionContainer.scrollLeft);
-    iconVisibility();
+    right = Math.min(selectionContainer.scrollLeft + 100, scrollAble);
+    console.log(`Right: ${right}`);
+    selectionContainer.scrollLeft += 100;
 });
-
 scrollLeftBtn.addEventListener("click", () => {
-    selectionContainer.scrollLeft -= 110;
-    iconVisibility();
+    left = Math.max(selectionContainer.scrollLeft - 100, 0);
+    selectionContainer.scrollLeft -= 100;
 });
+selectionContainer.addEventListener("scroll", () => {
+    if (selectionContainer.scrollLeft <= left) {
+        iconVisibility();
+    }
 
+    if (selectionContainer.scrollLeft >= right) {
+        iconVisibility();
+    }
+});
 iconVisibility();
