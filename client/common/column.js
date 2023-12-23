@@ -1,6 +1,9 @@
+/**
+ * This module will have all things needed to modify column elements in a list
+ */
 "use strict";
 
-const columnContainer = document.getElementById(
+let columnContainer = document.getElementById(
     "body__main-content__display__frame"
 );
 const animateDuration = 1000;
@@ -27,7 +30,7 @@ const createColumn = function (dataPercentage) {
  * @param   {HTMLLIElement} column The column element
  * @returns {void}
  */
-const draw = function (column, duration) {
+const drawColumn = function (column, duration) {
     $(column).animate(
         {
             height: column.getAttribute("data-percentage") + "%",
@@ -51,8 +54,15 @@ const drawColumns = function (columns, start = 10, end = 100) {
             createColumn(start + Math.floor(Math.random() * (end - start)))
         );
 
-    columnContainer.replaceChildren();
-    elements.forEach((e) => columnContainer.appendChild(e));
+    const newColumnContainer = document.createElement("ul");
+    elements.forEach((e) => newColumnContainer.appendChild(e));
+    columnContainer.replaceWith(newColumnContainer);
+    newColumnContainer.setAttribute(
+        "class",
+        "body__main-content__display__frame"
+    );
+    newColumnContainer.setAttribute("id", "body__main-content__display__frame");
+    columnContainer = newColumnContainer;
 
     //draw
     $(function () {
@@ -74,7 +84,7 @@ const drawColumns = function (columns, start = 10, end = 100) {
  * @param {Number} end      The maximum height of the column
  * @returns {void}
  */
-const shuffleColumsHeight = function (columns, start = 10, end = 100) {
+const shuffleColumns = function (columns, start = 10, end = 100) {
     //generate random height
     const values = new Array(columns)
         .fill(0)
@@ -87,8 +97,8 @@ const shuffleColumsHeight = function (columns, start = 10, end = 100) {
         e.childNodes[0].setAttribute("data-percentage", values[i++].toString());
 
         //draw
-        draw(e.childNodes[0], animateDuration);
+        drawColumn(e.childNodes[0], animateDuration);
     }
 };
 
-export {draw, drawColumns, shuffleColumsHeight};
+export {drawColumn, drawColumns, shuffleColumns};

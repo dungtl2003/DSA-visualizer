@@ -1,27 +1,30 @@
+/**
+ * Run at the beginning
+ */
 "use strict";
 
 import "../asset/font/fontawesome-free-6.4.2-web/css/all.min.css";
 import "../asset/css/base.css";
 import "../asset/css/main.css";
 import "../asset/css/support.css";
-import {drawColumns} from "./array.js";
+import {drawColumns} from "./column.js";
 
 const sliderDefaultValue = 5;
-const sliderMaxColsNumber = 150;
-const sliderMinColsNumber = 5;
+const sliderMaxCols = 150;
+const sliderMinCols = 5;
 
 const colsNumberDisplay = document.getElementById("body__sidebar__col-num");
 const slider = document.getElementById("body__sidebar__slider");
 
 colsNumberDisplay.innerHTML = sliderDefaultValue;
 slider.setAttribute("value", sliderDefaultValue);
-slider.setAttribute("min", sliderMinColsNumber);
-slider.setAttribute("max", sliderMaxColsNumber);
+slider.setAttribute("min", sliderMinCols);
+slider.setAttribute("max", sliderMaxCols);
 
-colsNumberDisplay.setAttribute("min", sliderMinColsNumber);
-colsNumberDisplay.setAttribute("max", sliderMaxColsNumber);
+colsNumberDisplay.setAttribute("min", sliderMinCols);
+colsNumberDisplay.setAttribute("max", sliderMaxCols);
 colsNumberDisplay.setAttribute("value", sliderDefaultValue);
 
 drawColumns(sliderDefaultValue);
 
-export {sliderDefaultValue, sliderMinColsNumber, sliderMaxColsNumber};
+export {sliderDefaultValue, sliderMinCols, sliderMaxCols};

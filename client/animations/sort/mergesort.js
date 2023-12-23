@@ -1,6 +1,6 @@
 "use strict";
 
-import {draw} from "../../common/array.js";
+import {drawColumn} from "../../common/column.js";
 
 const duration = 1000;
 const columnContainer = document.getElementById(
@@ -9,36 +9,27 @@ const columnContainer = document.getElementById(
 
 /**
  * Change color of the column to `color` for `duration` time
- * @param   {HTMLLIElement} column  The column element
- * @param   {String}        color   Color to paint the column
+ * @param   {HTMLLIElement} column      The column element
+ * @param   {String}        color       Color to paint the column
+ * @param   {Number}        duration    The time new color exist before changing back to original color
  * @returns {void}
  */
-const paint = function (column, columnBgColor, time) {
-    switchColumnColor(columnBgColor, column);
+const flashColumnColor = function (column, color, duration = 1000) {
+    changeColumnColor(column, color);
 
     setTimeout(() => {
-        switchColumnColor(columnBgColor, column);
+        changeColumnColor(column, color);
     }, duration);
 };
 
-const switchColumnColor = function (color, column) {
-    switch (color) {
-        case "red":
-            column.classList.toggle(
-                "body__main-content__display__col--turn-red"
-            );
-            break;
-        case "blue":
-            column.classList.toggle(
-                "body__main-content__display__col--turn-blue"
-            );
-            break;
-        case "yellow":
-            column.classList.toggle(
-                "body__main-content__display__col--turn-yellow"
-            );
-            break;
-    }
+/**
+ * Change the color of the column
+ * @param   {HTMLLIElement} column      The column element
+ * @param   {String}        color       Color to paint the column
+ * @returns {void}
+ */
+const changeColumnColor = function (column, color) {
+    column.classList.toggle("body__main-content__display__col--turn-" + color);
 };
 
 /**
@@ -50,10 +41,18 @@ const switchColumnColor = function (color, column) {
  */
 const compare = function (instruction, columns, color = "red") {
     if (instruction.p1 !== -1) {
-        paint(columns[instruction.p1].childNodes[0], color, duration);
+        flashColumnColor(
+            columns[instruction.p1].childNodes[0],
+            color,
+            duration
+        );
     }
     if (instruction.p2 !== -1) {
-        paint(columns[instruction.p2].childNodes[0], color, duration);
+        flashColumnColor(
+            columns[instruction.p2].childNodes[0],
+            color,
+            duration
+        );
     }
 };
 
@@ -76,11 +75,11 @@ const divide = function (
     const end = instruction.end;
 
     for (let i = start; i <= mid; i++) {
-        paint(columns[i].childNodes[0], color1);
+        flashColumnColor(columns[i].childNodes[0], color1);
     }
 
     for (let i = mid + 1; i <= end; i++) {
-        paint(columns[i].childNodes[0], color2);
+        flashColumnColor(columns[i].childNodes[0], color2);
     }
 };
 
@@ -101,7 +100,7 @@ const merge = function (instruction, columns) {
             "data-percentage",
             values[dataIndex++]
         );
-        draw(columns[i].childNodes[0], duration);
+        drawColumn(columns[i].childNodes[0], duration);
     }
 };
 

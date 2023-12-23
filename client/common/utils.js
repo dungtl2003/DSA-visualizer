@@ -1,6 +1,6 @@
 "use strict";
 
-import {sliderMinColsNumber, sliderMaxColsNumber} from "./setDefault.js";
+import {sliderMinCols, sliderMaxCols} from "./defaults.js";
 
 const colNumberDisplay = document.getElementById("body__sidebar__col-num");
 
@@ -10,10 +10,10 @@ const colNumberDisplay = document.getElementById("body__sidebar__col-num");
  */
 const getValidColNumber = function () {
     const value = Number(colNumberDisplay.value);
-    return value > sliderMaxColsNumber
-        ? sliderMaxColsNumber
-        : value < sliderMinColsNumber
-          ? sliderMinColsNumber
+    return value > sliderMaxCols
+        ? sliderMaxCols
+        : value < sliderMinCols
+          ? sliderMinCols
           : value;
 };
 

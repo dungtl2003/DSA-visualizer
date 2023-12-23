@@ -1,9 +1,9 @@
 "use strict";
 
-import "./common/setDefault.js";
-import {drawColumns, shuffleColumsHeight} from "./common/array.js";
+import {sliderDefaultValue} from "./common/defaults.js";
+import {drawColumns, shuffleColumns} from "./common/column.js";
 import mergesort from "./components/sort/mergesort.js";
-import mergesortAmination from "./amination/sort/mergesort.js";
+import mergesortAmination from "./animations/sort/mergesort.js";
 import {getValidColNumber} from "./common/utils.js";
 
 const slider = document.getElementById("body__sidebar__slider");
@@ -11,7 +11,6 @@ const colNumberDisplay = document.getElementById("body__sidebar__col-num");
 const columnContainer = document.getElementById(
     "body__main-content__display__frame"
 );
-
 const btnSolve = document.getElementById("body__sidebar__btn-item--solve");
 const btnShuffle = document.getElementById("body__sidebar__btn-item--shuffle");
 const sidebarForm = document.getElementById("body__sidebar__form");
@@ -19,6 +18,7 @@ const colNumForm = document.getElementById(
     "body__sidebar__param-display__form"
 );
 let curColNumber = sliderDefaultValue;
+
 window.onpageshow = function (event) {
     if (event.persisted) {
         // reload each time go out of the current page
@@ -26,23 +26,37 @@ window.onpageshow = function (event) {
     }
 };
 
-// Slider to change the number of columns
-slider.onchange = function () {
-    colNumberDisplay.innerHTML = this.value;
-    drawColumns(Number(this.value));
-};
+// Prevent form from submitting
+colNumForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+});
+sidebarForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+});
 
+// Slider to change the number of columns
 slider.oninput = function () {
     curColNumber = Number(this.value);
     colNumberDisplay.value = this.value;
 };
-
 slider.onchange = function () {
     drawColumns(curColNumber);
-    addColMouseEvent();
+    mouseHoverColumnEvent();
 };
 
-btnSolve.addEventListener("click", function (e) {
+// Change the number of columns by typing instead of sliding
+colNumberDisplay.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+        curColNumber = getValidColNumber();
+        colNumberDisplay.value = curColNumber.toString();
+        slider.value = curColNumber.toString();
+        drawColumns(curColNumber);
+        mouseHoverColumnEvent();
+    }
+});
+
+// Solve with animations
+btnSolve.addEventListener("click", function () {
     const values = [];
     for (const child of columnContainer.children) {
         values.push(
@@ -54,33 +68,17 @@ btnSolve.addEventListener("click", function (e) {
     mergesortAmination(instructions);
 });
 
-btnShuffle.addEventListener("click", function (e) {
-    if (curColNumber !== 0) shuffleColumsHeight(curColNumber);
+// Shuffle the columns with animations
+btnShuffle.addEventListener("click", function () {
+    if (curColNumber !== 0) shuffleColumns(curColNumber);
 });
 
-colNumForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-});
-
-sidebarForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-});
-
-colNumberDisplay.addEventListener("keydown", function (e) {
-    if (e.keyCode === 13) {
-        curColNumber = getValidColNumber();
-        colNumberDisplay.value = curColNumber.toString();
-        slider.value = curColNumber.toString();
-        drawColumns(curColNumber);
-        addColMouseEvent();
-    }
-});
-
-const addColMouseEvent = function () {
+// See value of hovered column
+const mouseHoverColumnEvent = function () {
     document
         .querySelectorAll(".body__main-content__display__col")
         .forEach((e) => {
-            e.addEventListener("mouseover", function (event) {
+            e.addEventListener("mouseover", function () {
                 const valueElement = document.createElement("div");
                 valueElement.setAttribute(
                     "id",
@@ -89,7 +87,7 @@ const addColMouseEvent = function () {
                 valueElement.innerHTML = e.getAttribute("data-percentage");
                 e.parentNode.appendChild(valueElement);
             });
-            e.addEventListener("mouseout", function (event) {
+            e.addEventListener("mouseout", function () {
                 const valueElement = document.getElementById(
                     "body__main-content__display__value"
                 );
@@ -98,4 +96,4 @@ const addColMouseEvent = function () {
         });
 };
 
-addColMouseEvent();
+mouseHoverColumnEvent();
