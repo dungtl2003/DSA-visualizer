@@ -11,7 +11,7 @@ import "../asset/css/reponsive.css";
 import {drawColumns} from "./column.js";
 
 const sliderDefaultValue = 5;
-const sliderMaxCols = 150;
+const sliderMaxCols = 25;
 const sliderMinCols = 5;
 
 const colsNumberDisplay = document.getElementById("body__sidebar__col-num");

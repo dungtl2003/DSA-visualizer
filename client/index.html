@@ -36,9 +36,13 @@
                     <a
                         href="#"
                         class="header__navbar__selection-item header__navbar__selection-item--activate"
+                        value="Algorithm"
                         >Algorithm</a
                     >
-                    <a href="#" class="header__navbar__selection-item"
+                    <a
+                        href="#"
+                        class="header__navbar__selection-item"
+                        value="DataStructure"
                         >Data Structure</a
                     >
                 </div>
@@ -66,25 +70,54 @@
                 <ul id="header__catebar__list">
                     <li
                         class="header__catebar__item header__catebar__item--activate"
+                        value="SORTING"
                     >
                         SORTING
                     </li>
-                    <li class="header__catebar__item">SEARCHING</li>
-                    <li class="header__catebar__item">RECURSION</li>
-                    <li class="header__catebar__item">TWO POINTERS</li>
-                    <li class="header__catebar__item">HASHING</li>
-                    <li class="header__catebar__item">SEQUENCES</li>
-                    <li class="header__catebar__item">SELECTION</li>
-                    <li class="header__catebar__item">ITERATOR</li>
-                    <li class="header__catebar__item">GAME THEORY</li>
-                    <li class="header__catebar__item">BITMASK</li>
-                    <li class="header__catebar__item">MATRIX</li>
-                    <li class="header__catebar__item">GRAPH</li>
-                    <li class="header__catebar__item">MATH</li>
-                    <li class="header__catebar__item">BIT MANIPULATION</li>
-                    <li class="header__catebar__item">MEMOIZATION</li>
-                    <li class="header__catebar__item">SHORTEST PATH</li>
-                    <li class="header__catebar__item">COUNTING</li>
+                    <li class="header__catebar__item" value="searching">
+                        SEARCHING
+                    </li>
+                    <li class="header__catebar__item" value="recursion">
+                        RECURSION
+                    </li>
+                    <li class="header__catebar__item" value="twopointer">
+                        TWO POINTERS
+                    </li>
+                    <li class="header__catebar__item" value="hashing">
+                        HASHING
+                    </li>
+                    <li class="header__catebar__item" value="sequnces">
+                        SEQUENCES
+                    </li>
+                    <li class="header__catebar__item" value="selection">
+                        SELECTION
+                    </li>
+                    <li class="header__catebar__item" value="iteration">
+                        ITERATOR
+                    </li>
+                    <li class="header__catebar__item" value="gametheory">
+                        GAME THEORY
+                    </li>
+                    <li class="header__catebar__item" value="bitmask">
+                        BITMASK
+                    </li>
+                    <li class="header__catebar__item" value="matmask">
+                        MATRIX
+                    </li>
+                    <li class="header__catebar__item" value="graph">GRAPH</li>
+                    <li class="header__catebar__item" value="math">MATH</li>
+                    <li class="header__catebar__item" value="bitmanipulation">
+                        BIT MANIPULATION
+                    </li>
+                    <li class="header__catebar__item" value="memoization">
+                        MEMOIZATION
+                    </li>
+                    <li class="header__catebar__item" value="shorstestpath">
+                        SHORTEST PATH
+                    </li>
+                    <li class="header__catebar__item" value="counting">
+                        COUNTING
+                    </li>
                 </ul>
                 <i
                     class="fa-solid fa-greater-than scroll-btn scroll-btn--right"
@@ -111,34 +144,63 @@
                             <a
                                 href="#"
                                 class="type-selection__item type-selection__item--activate"
+                                value="Merge Sort"
                                 >Merge Sort</a
                             >
-                            <a href="#" class="type-selection__item"
+                            <a
+                                href="#"
+                                class="type-selection__item"
+                                value="Quick Sort"
                                 >Quick Sort</a
                             >
-                            <a href="#" class="type-selection__item"
+                            <a
+                                href="#"
+                                class="type-selection__item"
+                                value="Heap Sort"
                                 >Heap Sort</a
                             >
-                            <a href="#" class="type-selection__item"
+                            <a
+                                href="#"
+                                class="type-selection__item"
+                                value="Bubble Sort"
                                 >Bubble Sort</a
                             >
-                            <a href="#" class="type-selection__item"
+                            <a
+                                href="#"
+                                class="type-selection__item"
+                                value="Sellection Sort"
                                 >Sellection Sort</a
                             >
-                            <a href="#" class="type-selection__item"
+                            <a
+                                href="#"
+                                class="type-selection__item"
+                                value="Insertion Sort"
                                 >Insertion Sort</a
                             >
-                            <a href="#" class="type-selection__item"
+                            <a
+                                href="#"
+                                class="type-selection__item"
+                                value="Radix Sort"
                                 >Radix Sort</a
                             >
-                            <a href="#" class="type-selection__item"
+                            <a
+                                href="#"
+                                class="type-selection__item"
+                                value="Shell Sort"
                                 >Shell Sort</a
                             >
-                            <a href="#" class="type-selection__item"
+                            <a
+                                href="#"
+                                class="type-selection__item"
+                                value="Cocktail Shaker Sort"
                                 >Cocktail Shaker Sort</a
                             >
-                            <a href="#" class="type-selection__item"
-                                >Gnome Sort</a
+                            <a
+                                href="#"
+                                class="type-selection__item"
+                                value="Gnome Sort"
+                            >
+                                Sort</a
                             >
                         </div>
                         <i
@@ -162,48 +224,60 @@
                     </div>
                 </div>
             </div>
-            <div class="body__sidebar">
-                <span class="body__sidebar__param-display"
-                    >Columns:
-                    <form action="" id="body__sidebar__param-display__form">
+
+            <div class="body__side">
+                <div class="body__sidebar">
+                    <span class="body__sidebar__param-display"
+                        >Speeds:
+                        <form action="" id="body__sidebar__param-display__form">
+                            <input
+                                type="number"
+                                id="body__sidebar__animate-speed"
+                                autocomplete="on"
+                                required
+                            />
+                        </form>
+                    </span>
+                    <span class="body__sidebar__param-display"
+                        >Columns:
+                        <form action="" id="body__sidebar__param-display__form">
+                            <input
+                                type="number"
+                                id="body__sidebar__col-num"
+                                autocomplete="on"
+                                required
+                            />
+                        </form>
+                    </span>
+                    <form id="body__sidebar__form">
                         <input
-                            type="number"
-                            id="body__sidebar__col-num"
-                            autocomplete="on"
-                            required
+                            type="range"
+                            class="slider"
+                            id="body__sidebar__slider"
                         />
                     </form>
-                </span>
-                <form id="body__sidebar__form">
-                    <input
-                        type="range"
-                        class="slider"
-                        id="body__sidebar__slider"
-                    />
-                </form>
-                <div class="body__sidebar__param-display">
-                    Moves: <span id="body__sidebar__moves-num">0</span>
-                </div>
+                    <div class="body__sidebar__param-display">
+                        Moves: <span id="body__sidebar__moves-num">0</span>
+                    </div>
 
-                <div class="body__sidebar__btn-container">
-                    <button
-                        class="default-btn body__sidebar__btn-item--shuffle"
-                        id="body__sidebar__btn-item--shuffle"
-                    >
-                        Shuffle
-                    </button>
-                    <button
-                        class="default-btn body__sidebar__btn-item--log"
-                        id="body__sidebar__btn-item--log"
-                    >
-                        Log
-                    </button>
-                    <button
-                        class="default-btn body__sidebar__btn-item--solve"
-                        id="body__sidebar__btn-item--solve"
-                    >
-                        Solve
-                    </button>
+                    <div class="body__sidebar__btn-container">
+                        <button
+                            class="default-btn body__sidebar__btn-item--shuffle"
+                            id="body__sidebar__btn-item--shuffle"
+                        >
+                            Shuffle
+                        </button>
+                        <button
+                            class="default-btn body__sidebar__btn-item--solve"
+                            id="body__sidebar__btn-item--solve"
+                        >
+                            Solve
+                        </button>
+                    </div>
+                </div>
+                <div class="body__side-text-area-container">
+                    <textarea name="" id="body__side-text-area"> </textarea>
+                    <div class="body__side-text-area__title">Sorting Flow</div>
                 </div>
             </div>
         </div>
