@@ -2,10 +2,14 @@ version: "3"
 
 services:
   dsa_visualizer:
+    container_name: test
     image: ilikeblue/dsa_visualizer:latest
     build:
       context: .
     ports:
       - "8080:80"
-    env_file:
-      - ./.env/.production/app.env
+    environment:
+      - NODE_ENV: "test"
+      - LOGGING_LEVEL: "debug"
+      - NODE_ROOT: "/home/app"
+      - PORT: 8080
