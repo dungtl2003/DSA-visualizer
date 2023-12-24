@@ -1,0 +1,30 @@
+name: Test
+on:
+  pull_request:
+  push: 
+    branches: 
+      - main 
+      - feature/server
+      - feature/client
+
+jobs:
+  test:
+    name: Run test suite
+    runs-on: ubuntu-latest
+    env:
+      COMPOSE_FILE: ./compose.test.yaml
+      DOCKER_USER: ${{ secrets.DOCKERHUB_USER }}
+      DOCKER_PASS: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Login to DockerHub
+      run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASSWORD
+
+    - name: Build docker images
+      run: npm run build:prod && docker-compose build
+
+    - name: Run tests
+      run: docker-compose run test
