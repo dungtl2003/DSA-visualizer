@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-  dsa_visualizer:
+  test:
     image: ilikeblue/dsa_visualizer:latest
     build:
       context: .
