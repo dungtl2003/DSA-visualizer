@@ -27,7 +27,7 @@ jobs:
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
     - name: Build docker images
-      run: docker-compose build
+      run: docker-compose -f compose.test.yaml build
 
     - name: Run tests
-      run: docker-compose run test
+      run: docker-compose -f compose.test.yaml run --rm test sh -c "npm run test"
