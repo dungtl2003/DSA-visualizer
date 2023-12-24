@@ -2,24 +2,35 @@
 
 import {drawColumn} from "../../common/column.js";
 
-const duration = 1000;
+const duration = 1500;
 const columnContainer = document.getElementById(
     "body__main-content__display__frame"
 );
+let signal = null;
 
 /**
  * Change color of the column to `color` for `duration` time
  * @param   {HTMLLIElement} column      The column element
  * @param   {String}        color       Color to paint the column
- * @param   {Number}        duration    The time new color exist before changing back to original color
  * @returns {void}
  */
-const flashColumnColor = function (column, color, duration = 1000) {
+const flashColumnColor = function (column, color) {
     changeColumnColor(column, color);
 
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
         changeColumnColor(column, color);
-    }, duration);
+    }, duration / 2);
+
+    signal.addEventListener("abort", () => {
+        clearTimeout(timeoutId);
+        if (
+            column.classList.contains(
+                "body__main-content__display__col--turn-" + color
+            )
+        ) {
+            changeColumnColor(column, color);
+        }
+    });
 };
 
 /**
@@ -41,18 +52,10 @@ const changeColumnColor = function (column, color) {
  */
 const compare = function (instruction, columns, color = "red") {
     if (instruction.p1 !== -1) {
-        flashColumnColor(
-            columns[instruction.p1].childNodes[0],
-            color,
-            duration
-        );
+        flashColumnColor(columns[instruction.p1].childNodes[0], color);
     }
     if (instruction.p2 !== -1) {
-        flashColumnColor(
-            columns[instruction.p2].childNodes[0],
-            color,
-            duration
-        );
+        flashColumnColor(columns[instruction.p2].childNodes[0], color);
     }
 };
 
@@ -125,18 +128,25 @@ const handle = async function (instruction) {
                 break;
         }
 
-        setTimeout(() => {
+        const timeoutId = setTimeout(() => {
             resolve();
         }, duration);
+
+        signal.addEventListener("abort", () => {
+            clearTimeout(timeoutId);
+        });
     });
 };
 
 /**
  * Run animation of all `instructions`
- * @param   {Array<Object>}     instructions   All instructions to follow
+ * @param   {Array<Object>}     instructions    All instructions to follow
+ * @param   {AbortSignal}       abortSignal     Signal to know if this operation should be canceled
  * @returns {void}
  */
-const animation = async function (instructions) {
+const animation = async function (instructions, abortSignal) {
+    signal = abortSignal;
+
     for (const instruction of instructions) {
         await handle(instruction);
     }
