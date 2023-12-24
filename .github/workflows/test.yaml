@@ -27,7 +27,7 @@ jobs:
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
     - name: Build docker images
-      run: npm run build:prod && docker-compose build
+      run: docker-compose build
 
     - name: Run tests
       run: docker-compose run test
