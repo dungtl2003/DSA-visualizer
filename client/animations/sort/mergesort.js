@@ -1,12 +1,22 @@
 "use strict";
 
-import {drawColumn} from "../../common/column.js";
-
 const duration = 1500;
 const columnContainer = document.getElementById(
     "body__main-content__display__frame"
 );
+
+const getComponents = async function () {
+    const {drawColumn} = await import("../../common/column.js");
+    return {drawColumn};
+};
+
+let drawColumn;
 let signal = null;
+getComponents()
+    .then((values) => {
+        ({drawColumn} = values);
+    })
+    .catch();
 
 /**
  * Change color of the column to `color` for `duration` time
@@ -145,6 +155,7 @@ const handle = async function (instruction) {
  * @returns {void}
  */
 const animation = async function (instructions, abortSignal) {
+    if (!drawColumn) return;
     signal = abortSignal;
 
     for (const instruction of instructions) {

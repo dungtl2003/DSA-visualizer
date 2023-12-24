@@ -7,7 +7,6 @@ import "../asset/font/fontawesome-free-6.4.2-web/css/all.min.css";
 import "../asset/css/base.css";
 import "../asset/css/main.css";
 import "../asset/css/support.css";
-import {drawColumns} from "./column.js";
 
 const sliderDefaultValue = 5;
 const sliderMaxCols = 150;
@@ -16,15 +15,31 @@ const sliderMinCols = 5;
 const colsNumberDisplay = document.getElementById("body__sidebar__col-num");
 const slider = document.getElementById("body__sidebar__slider");
 
-colsNumberDisplay.innerHTML = sliderDefaultValue;
-slider.setAttribute("value", sliderDefaultValue);
-slider.setAttribute("min", sliderMinCols);
-slider.setAttribute("max", sliderMaxCols);
+const getComponents = async function () {
+    const {drawColumns} = await import("./column.js");
+    return {drawColumns};
+};
 
-colsNumberDisplay.setAttribute("min", sliderMinCols);
-colsNumberDisplay.setAttribute("max", sliderMaxCols);
-colsNumberDisplay.setAttribute("value", sliderDefaultValue);
+getComponents()
+    .then((values) => {
+        init(values);
+    })
+    .catch(() => "Error");
 
-drawColumns(sliderDefaultValue);
+const init = function (values) {
+    let drawColumns;
+    ({drawColumns} = values);
+
+    colsNumberDisplay.innerHTML = sliderDefaultValue;
+    slider.setAttribute("value", sliderDefaultValue);
+    slider.setAttribute("min", sliderMinCols);
+    slider.setAttribute("max", sliderMaxCols);
+
+    colsNumberDisplay.setAttribute("min", sliderMinCols);
+    colsNumberDisplay.setAttribute("max", sliderMaxCols);
+    colsNumberDisplay.setAttribute("value", sliderDefaultValue);
+
+    drawColumns(sliderDefaultValue);
+};
 
 export {sliderDefaultValue, sliderMinCols, sliderMaxCols};
