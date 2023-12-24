@@ -123,5 +123,4 @@ dist
 .pnp.*
 
 # other
-dist
 .env/.production/app.env
