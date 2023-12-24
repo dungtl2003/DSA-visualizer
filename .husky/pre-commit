@@ -2,4 +2,6 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 npm test
+# Make sure the dist folder only contain production files
+npm run build:prod
 npx --no-install lint-staged -c .lint-staged.config.mjs
