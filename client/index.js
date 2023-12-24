@@ -17,14 +17,26 @@ const sidebarForm = document.getElementById("body__sidebar__form");
 const colNumForm = document.getElementById(
     "body__sidebar__param-display__form"
 );
-const btnScrollLeft = document.getElementById(
+const btnBodyScrollLeft = document.getElementById(
     "body__main-content__scroll-btn--left"
 );
-const btnScrollRight = document.getElementById(
+const btnBodyScrollRight = document.getElementById(
     "body__main-content__scroll-btn--right"
 );
-const selectionContainer = document.getElementById("type-selection");
+const bodyScrollBar = document.getElementById("type-selection");
+const headerScrollBar = document.getElementById("header__catebar__list");
+const btnHeaderScrollLeft = document.getElementById(
+    "header__catebar__scroll-btn--left"
+);
+const btnHeaderScrollRight = document.getElementById(
+    "header__catebar__scroll-btn--right"
+);
+const bodyScrollableValue =
+    Math.ceil(bodyScrollBar.scrollWidth) - Math.ceil(bodyScrollBar.clientWidth);
 let curColNumber = sliderDefaultValue;
+let bodyScrollBarValue = 0;
+let checkBodyScrollBtnClicked = false;
+const jump = 110;
 
 window.onpageshow = function (event) {
     if (event.persisted) {
@@ -70,7 +82,6 @@ btnSolve.addEventListener("click", function () {
             Number(child.childNodes[0].getAttribute("data-percentage"))
         );
     }
-
     const instructions = mergesort(values);
     mergesortAmination(instructions);
 });
@@ -104,30 +115,47 @@ const mouseHoverColumnEvent = function () {
 };
 mouseHoverColumnEvent();
 
-// Event: Scroll navbar
+// Scroll body navbar
 const iconVisibility = () => {
-    const scrollLeftValue = Math.ceil(selectionContainer.scrollLeft);
-    const scrollAble =
-        Math.ceil(selectionContainer.scrollWidth) -
-        Math.ceil(selectionContainer.clientWidth);
-
-    console.log(i + " : " + scrollLeftValue);
-    i++;
-
-    btnScrollLeft.style.display = scrollLeftValue > 0 ? "block" : "none";
-    btnScrollRight.style.display =
-        scrollAble > scrollLeftValue ? "block" : "none";
+    btnBodyScrollLeft.style.display = bodyScrollBarValue > 0 ? "block" : "none";
+    btnBodyScrollRight.style.display =
+        bodyScrollableValue > bodyScrollBarValue ? "block" : "none";
+    checkBodyScrollBtnClicked = false;
 };
-let i = 0;
-btnScrollRight.addEventListener("click", () => {
-    selectionContainer.scrollLeft += 220;
-    console.log(i + " : " + selectionContainer.scrollLeft);
-    iconVisibility();
+
+btnBodyScrollRight.addEventListener("click", () => {
+    bodyScrollBarValue =
+        bodyScrollBarValue + jump >= bodyScrollableValue
+            ? bodyScrollableValue
+            : bodyScrollBarValue + jump;
+    checkBodyScrollBtnClicked = true;
+    bodyScrollBar.scrollLeft += jump;
 });
 
-btnScrollLeft.addEventListener("click", () => {
-    selectionContainer.scrollLeft -= 110;
-    iconVisibility();
+btnBodyScrollLeft.addEventListener("click", () => {
+    bodyScrollBarValue =
+        bodyScrollBarValue - jump <= 0 ? 0 : bodyScrollBarValue - jump;
+    checkBodyScrollBtnClicked = true;
+    bodyScrollBar.scrollLeft -= jump;
+});
+
+bodyScrollBar.addEventListener("scroll", () => {
+    if (!checkBodyScrollBtnClicked) {
+        bodyScrollBarValue = Math.ceil(bodyScrollBar.scrollLeft);
+    }
+    if (bodyScrollBar.scrollLeft === bodyScrollBarValue) {
+        iconVisibility();
+    }
 });
 
 iconVisibility();
+
+// Scroll header navbar
+
+btnHeaderScrollRight.addEventListener("click", () => {
+    headerScrollBar.scrollLeft += jump;
+});
+
+btnHeaderScrollLeft.addEventListener("click", () => {
+    headerScrollBar.scrollLeft -= jump;
+});

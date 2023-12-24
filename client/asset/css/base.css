@@ -4,6 +4,7 @@
     --text-color: #ccc;
     --white-color: #e7e9eb;
     --black-color: #282a35;
+    --color-1: #059862;
 
     --header__navbar-height: 45px;
     --header__catebar-height: calc(75px - var(--header__navbar-height));
@@ -35,4 +36,24 @@ html {
 
 .default-btn:hover {
     opacity: 1;
+}
+
+.scroll-btn{
+    position: absolute;
+    transition: color .3s;
+    cursor: pointer;
+}
+
+.scroll-btn:hover {
+    color: white !important;
+}
+
+.scroll-btn--right {
+    right: 0;
+    background: linear-gradient(to right, transparent, #2e2e41 80%);
+}
+
+.scroll-btn--left {
+    left: 0;
+    background: linear-gradient(to left, transparent, #2e2e41 80%);
 }

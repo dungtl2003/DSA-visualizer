@@ -7,6 +7,7 @@ import "../asset/font/fontawesome-free-6.4.2-web/css/all.min.css";
 import "../asset/css/base.css";
 import "../asset/css/main.css";
 import "../asset/css/support.css";
+import "../asset/css/reponsive.css";
 import {drawColumns} from "./column.js";
 
 const sliderDefaultValue = 5;
