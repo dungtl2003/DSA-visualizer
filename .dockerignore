@@ -1,2 +1,4 @@
-node_modules
-npm-debug.log
+.git
+LICENSE
+README.md
+logo.png

@@ -122,4 +122,4 @@ out
 .pnp.*
 
 # other
-.env/.production/app.env
+.env/.production/nginx.env
