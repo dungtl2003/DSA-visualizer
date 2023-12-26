@@ -1,6 +1,6 @@
 version: "3"
 
 services:
-  dsa_visualizer:
-    container_name: dsa
+  nginx:
+    container_name: nginx
     image: ilikeblue/dsa_visualizer:latest

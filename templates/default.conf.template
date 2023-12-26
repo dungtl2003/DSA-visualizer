@@ -1,0 +1,7 @@
+server {
+    listen ${PORT};
+    root ${ROOT}/dist;
+
+    location / {
+    }
+}

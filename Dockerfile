@@ -1,17 +1,20 @@
-FROM node:21-alpine
+FROM nginxinc/nginx-unprivileged:1-alpine3.18
 
-# Set current working directory to be in /home/app
-WORKDIR /home/app
+USER root
 
-# Download non-dev dependencies
-COPY ./package.json .
-# Need to set script prepare to none so that it does not try to download husky
-RUN npm pkg set scripts.prepare=" " && npm install --omit=dev
+# Set current working directory to be in /app
+WORKDIR /app
 
-COPY ./server ./server
-COPY ./config ./config
+COPY ./templates /etc/nginx/templates
+COPY ./run.sh ./run.sh
 COPY ./dist ./dist
+
+RUN touch /etc/nginx/conf.d/default.conf && \
+    chown -R nginx:nginx /etc/nginx/conf.d && \
+    chmod a+x run.sh
 
 EXPOSE 80
 
-CMD ["node", "server/server.js"]
+USER nginx
+
+CMD ["./run.sh"]
