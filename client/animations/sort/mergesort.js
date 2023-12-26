@@ -6,6 +6,10 @@ const duration = 1000;
 const columnContainer = document.getElementById(
     "body__main-content__display__frame"
 );
+const logsScreen = document.getElementById("body__side-text-area");
+const movesDisplay = document.getElementById("body__sidebar__moves-num");
+let step;
+let moves;
 
 /**
  * Change color of the column to `color` for `duration` time
@@ -104,6 +108,19 @@ const merge = function (instruction, columns) {
     }
 };
 
+const updateLogsScreen = function (instruction) {
+    const newLine = step === 1 ? "" : "\n\n";
+    logsScreen.value +=
+        newLine + "__STEP " + step + " : " + instruction.message;
+    logsScreen.scrollTop = logsScreen.scrollHeight;
+
+    step++;
+};
+
+const updateMovesDisplay = function (instruction) {
+    if (instruction.isAMove) movesDisplay.innerHTML = ++moves;
+};
+
 /**
  * Handle animation following the `instruction`
  * @param   {Object}        instruction   The instruction to animate
@@ -113,6 +130,8 @@ const handle = async function (instruction) {
     let columns = columnContainer.children;
 
     return new Promise((resolve) => {
+        updateLogsScreen(instruction);
+        updateMovesDisplay(instruction);
         switch (instruction.type) {
             case "divide":
                 divide(instruction, columns);
@@ -137,6 +156,8 @@ const handle = async function (instruction) {
  * @returns {void}
  */
 const animation = async function (instructions) {
+    step = 1;
+    moves = 0;
     for (const instruction of instructions) {
         await handle(instruction);
     }

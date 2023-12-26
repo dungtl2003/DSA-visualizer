@@ -3,26 +3,32 @@
  * in the Array<Object> type
  * Instructions:
  * obj1 = {
- *      type:   "divide",
- *      start:  Number - The start index of the first sub-array
- *      mid:    Number - The end index of the first sub-array, `mid + 1` is
- *              the start index of the second sub-array
- *      end:    Number - The end index of the second sub-array, -1 means there
- *              is no second sub-array
+ *      type:       "divide",
+ *      isAMove:    Boolean - Check if this instruction counted as a move
+ *      start:      Number - The start index of the first sub-array
+ *      mid:        Number - The end index of the first sub-array, `mid + 1` is
+ *                  the start index of the second sub-array
+ *      end:        Number - The end index of the second sub-array, -1 means there
+ *                  is no second sub-array
+ *      message:    String - The explaination of the current step
  * }
  *
  * obj2 = {
- *      type:   "compare",
- *      p1:     Number - The index of the column in the first sub-array,
- *              -1 means there is no column
- *      p2:     Number - The index of the column in the second sub-array,
- *              -1 means there is no column
+ *      type:       "compare",
+ *      isAMove:    Boolean - Check if this instruction counted as a move
+ *      p1:         Number - The index of the column in the first sub-array,
+ *                  -1 means there is no column
+ *      p2:         Number - The index of the column in the second sub-array,
+ *                  -1 means there is no column
+ *      message:    String - The explaination of the current step
  * }
  *
  * obj3 = {
  *      type:       "merge",
+ *      isAMove:    Boolean - Check if this instruction counted as a move
  *      start:      Number - The start index of the merged array
  *      values:     Array<Number> - The list of sorted values
+ *      message:    String - The explaination of the current step
  * }
  */
 "use strict";
@@ -50,26 +56,60 @@ const merge = function (
     let i = start;
     let j = start;
     let k = mid + 1;
+    let compareLeftRight;
+    let choosenOne;
+    let index1;
+    let index2;
 
     while (j <= mid && k <= end) {
-        instructions.push({
-            type: "compare",
-            p1: j,
-            p2: k,
-        });
+        index1 = j;
+        index2 = k;
+
+        if (src[j] < src[k]) {
+            compareLeftRight = "shorter than";
+        } else if (src[j] === src[k]) {
+            compareLeftRight = "as high as";
+        } else {
+            compareLeftRight = "higher than";
+        }
 
         if (src[j] <= src[k]) {
-            target[i++] = nonDecrease ? src[j++] : src[k++];
+            if (nonDecrease) {
+                choosenOne = 1;
+                target[i++] = src[j++];
+            } else {
+                choosenOne = 2;
+                target[i++] = src[k++];
+            }
         } else {
-            target[i++] = nonDecrease ? src[k++] : src[j++];
+            if (nonDecrease) {
+                choosenOne = 2;
+                target[i++] = src[k++];
+            } else {
+                choosenOne = 1;
+                target[i++] = src[j++];
+            }
         }
+
+        instructions.push({
+            type: "compare",
+            isAMove: true,
+            p1: index1,
+            p2: index2,
+            message: `Compare 2 columns:
+            Column 1 at index ${index1} with value ${src[index1]}
+            Column 2 at index ${index2} with value ${src[index2]}
+            Column 1 is ${compareLeftRight} column 2, choose column ${choosenOne}`,
+        });
     }
 
     while (j <= mid) {
         instructions.push({
             type: "compare",
+            isAMove: true,
             p1: j,
             p2: -1,
+            message: `The second sub-array has no elements left to consider, choose column 1`,
         });
 
         target[i++] = src[j++];
@@ -78,8 +118,10 @@ const merge = function (
     while (k <= end) {
         instructions.push({
             type: "compare",
+            isAMove: true,
             p1: -1,
             p2: k,
+            message: `The first sub-array has no elements left to consider, choose column 2`,
         });
 
         target[i++] = src[k++];
@@ -87,8 +129,11 @@ const merge = function (
 
     instructions.push({
         type: "merge",
+        isAMove: false,
         start: start,
         values: target.slice(start, end + 1),
+        message: `The merged result:
+        [${target.slice(start, end + 1).join(", ")}]`,
     });
 };
 
@@ -107,17 +152,25 @@ const conquer = function (instructions, src, target, h, nonDecrease = true) {
     let start;
     let mid;
     let end;
+    let firstSubArrayStr;
+    let secondSubArrayStr;
 
     while (index + 2 * h <= length) {
         start = index;
         mid = index + h - 1;
         end = index + 2 * h - 1;
+        firstSubArrayStr = src.slice(start, mid + 1).join(", ");
+        secondSubArrayStr = src.slice(mid + 1, end + 1).join(", ");
 
         instructions.push({
             type: "divide",
+            isAMove: false,
             start: start,
             mid: mid,
             end: end,
+            message: `Consider the 2 following sub-arrays:
+            [${firstSubArrayStr}]
+            [${secondSubArrayStr}]`,
         });
 
         merge(instructions, src, target, start, mid, end, nonDecrease);
@@ -128,12 +181,18 @@ const conquer = function (instructions, src, target, h, nonDecrease = true) {
         start = index;
         mid = index + h - 1;
         end = length - 1;
+        firstSubArrayStr = src.slice(start, mid + 1).join(", ");
+        secondSubArrayStr = src.slice(mid + 1, end + 1).join(", ");
 
         instructions.push({
             type: "divide",
+            isAMove: false,
             start: start,
             mid: mid,
             end: end,
+            message: `Consider the 2 following sub-arrays:
+            [${firstSubArrayStr}]
+            [${secondSubArrayStr}]`,
         });
 
         merge(instructions, src, target, start, mid, end, nonDecrease);
@@ -141,17 +200,19 @@ const conquer = function (instructions, src, target, h, nonDecrease = true) {
         start = index;
         mid = length - 1;
         end = -1;
+        firstSubArrayStr = src.slice(start, mid + 1).join(", ");
 
         instructions.push({
             type: "divide",
+            isAMove: false,
             start: start,
             mid: mid,
             end: end,
+            message: `Consider the following sub-array:
+            [${firstSubArrayStr}]`,
         });
 
-        while (index < length) {
-            target[index] = src[index++];
-        }
+        merge(instructions, src, target, start, mid, end, nonDecrease);
     }
 };
 

@@ -38,6 +38,9 @@ let bodyScrollBarValue = 0;
 let checkBodyScrollBtnClicked = false;
 const jump = 110;
 
+let isSolving = false;
+let abortController = null;
+
 window.onpageshow = function (event) {
     if (event.persisted) {
         // reload each time go out of the current page
@@ -59,6 +62,12 @@ slider.oninput = function () {
     colNumberDisplay.value = this.value;
 };
 slider.onchange = function () {
+    if (isSolving) {
+        abortController.abort();
+        isSolving = false;
+        abortController = null;
+    }
+
     drawColumns(curColNumber);
     mouseHoverColumnEvent();
 };
@@ -66,6 +75,12 @@ slider.onchange = function () {
 // Change the number of columns by typing instead of sliding
 colNumberDisplay.addEventListener("keydown", function (e) {
     if (e.key === "Enter") {
+        if (isSolving) {
+            abortController.abort();
+            isSolving = false;
+            abortController = null;
+        }
+
         curColNumber = getValidColNumber();
         colNumberDisplay.value = curColNumber.toString();
         slider.value = curColNumber.toString();
@@ -75,7 +90,12 @@ colNumberDisplay.addEventListener("keydown", function (e) {
 });
 
 // Solve with animations
-btnSolve.addEventListener("click", function () {
+btnSolve.addEventListener("click", async function () {
+    // It is solving, do not solve again
+    if (isSolving) return;
+
+    isSolving = true;
+    abortController = new AbortController();
     const values = [];
     for (const child of columnContainer.children) {
         values.push(
@@ -83,12 +103,26 @@ btnSolve.addEventListener("click", function () {
         );
     }
     const instructions = mergesort(values);
-    mergesortAmination(instructions);
+    mergesortAmination(instructions, abortController.signal)
+        .then(() => {
+            isSolving = false;
+            abortController = null;
+        })
+        .catch(() => {
+            isSolving = false;
+            abortController = null;
+        });
 });
 
 // Shuffle the columns with animations
 btnShuffle.addEventListener("click", function () {
-    if (curColNumber !== 0) shuffleColumns(curColNumber);
+    if (isSolving) {
+        abortController.abort();
+        isSolving = false;
+        abortController = null;
+    }
+
+    shuffleColumns(curColNumber);
 });
 
 // See value of hovered column
@@ -151,7 +185,6 @@ bodyScrollBar.addEventListener("scroll", () => {
 iconVisibility();
 
 // Scroll header navbar
-
 btnHeaderScrollRight.addEventListener("click", () => {
     headerScrollBar.scrollLeft += jump;
 });

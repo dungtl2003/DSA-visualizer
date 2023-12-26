@@ -8,7 +8,7 @@
 
     --header__navbar-height: 45px;
     --header__catebar-height: calc(75px - var(--header__navbar-height));
-    --body__main-content-width: 80%;
+    --body__main-content-width: 70%;
     --body__sidebar-width: calc(100% - var(--body__main-content-width));
 }
 

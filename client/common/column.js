@@ -54,15 +54,8 @@ const drawColumns = function (columns, start = 10, end = 100) {
             createColumn(start + Math.floor(Math.random() * (end - start)))
         );
 
-    const newColumnContainer = document.createElement("ul");
-    elements.forEach((e) => newColumnContainer.appendChild(e));
-    columnContainer.replaceWith(newColumnContainer);
-    newColumnContainer.setAttribute(
-        "class",
-        "body__main-content__display__frame"
-    );
-    newColumnContainer.setAttribute("id", "body__main-content__display__frame");
-    columnContainer = newColumnContainer;
+    columnContainer.replaceChildren();
+    elements.forEach((e) => columnContainer.appendChild(e));
 
     //draw
     $(function () {
