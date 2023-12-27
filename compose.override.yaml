@@ -5,8 +5,12 @@ services:
     build:
       context: .
     ports:
-      - "8080:80"
-    env_file:
-      - ./.env/.production/nginx.env
+      - "8000:80"
+      - "9000:443"
     volumes:
       - ./dist:/app/dist
+      - ./certbot/test:/var/www/certbot/:ro
+
+  certbot:
+    volumes:
+      - ./certbot/test:/var/www/certbot/:rw

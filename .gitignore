@@ -122,4 +122,5 @@ out
 .pnp.*
 
 # other
-.env/.production/nginx.env
+.env
+dist

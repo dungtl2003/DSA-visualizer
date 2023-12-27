@@ -4,6 +4,15 @@ services:
   nginx:
     ports:
       - "80:80"
+      - "443:443"
     env_file:
       - ./.env/.production/nginx.env
+    volumes:
+      - ./certbot/www:/var/www/certbot/:ro
+      - ./certbot/conf/:/etc/nginx/ssl/:ro
     restart: always
+
+  certbot:
+    volumes:
+      - ./certbot/www:/var/www/certbot/:rw
+      - ./certbot/conf/:/etc/letsencrypt/:rw

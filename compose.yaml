@@ -4,3 +4,7 @@ services:
   nginx:
     container_name: nginx
     image: ilikeblue/dsa_visualizer:latest
+
+  certbot:
+    container_name: certbot
+    image: certbot/certbot:latest
