@@ -6,7 +6,7 @@
 let columnContainer = document.getElementById(
     "body__main-content__display__frame"
 );
-const animateDuration = 1000;
+const defaultDuration = 1000;
 
 /**
  * Create column HTML element
@@ -28,6 +28,7 @@ const createColumn = function (dataPercentage) {
 /**
  * Draw the column element
  * @param   {HTMLLIElement} column The column element
+ * @param {Number} duration The duration of drawing a Column
  * @returns {void}
  */
 const drawColumn = function (column, duration) {
@@ -44,9 +45,15 @@ const drawColumn = function (column, duration) {
  * @param {Number} columns  Number of columns you want to generate
  * @param {Number} start    The minimum height of the column
  * @param {Number} end      The maximum height of the column
+ * @param {Number} duration The duration of drawing each Column
  * @returns {void}
  */
-const drawColumns = function (columns, start = 10, end = 100) {
+const drawColumns = function (
+    columns,
+    start = 10,
+    end = 100,
+    duration = defaultDuration
+) {
     //create
     const elements = new Array(columns)
         .fill(0)
@@ -64,7 +71,7 @@ const drawColumns = function (columns, start = 10, end = 100) {
                 {
                     height: $(this).data("percentage") + "%",
                 },
-                animateDuration
+                duration
             );
         });
     });
@@ -75,9 +82,15 @@ const drawColumns = function (columns, start = 10, end = 100) {
  * @param {Number} columns  Number of columns you want to generate
  * @param {Number} start    The minimum height of the column
  * @param {Number} end      The maximum height of the column
+ * @param {Number} duration The duration of shuffle column
  * @returns {void}
  */
-const shuffleColumns = function (columns, start = 10, end = 100) {
+const shuffleColumns = function (
+    columns,
+    start = 10,
+    end = 100,
+    duration = defaultDuration
+) {
     //generate random height
     const values = new Array(columns)
         .fill(0)
@@ -90,7 +103,7 @@ const shuffleColumns = function (columns, start = 10, end = 100) {
         e.childNodes[0].setAttribute("data-percentage", values[i++].toString());
 
         //draw
-        drawColumn(e.childNodes[0], animateDuration);
+        drawColumn(e.childNodes[0], duration);
     }
 };
 

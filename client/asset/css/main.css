@@ -60,7 +60,7 @@
     color: var(--black-color);
     font-weight: 500;
     padding: 0 5px;
-    transition: border .5s;
+    transition: border 1s;
 }
 
 .header__navbar__search-box:hover{
@@ -325,15 +325,15 @@
     padding-top: 20px;
     position: sticky;
     top: 30px;
-    height: 500px;
+    height: 450px;
 }
 
 .body__side::before{
     content: ' ';
     position: absolute;
-    height: 82%;
+    height: 100%;
     left: -20px;
-    top: 15px;
+    top: 22px;
     border: solid var(--shadow-color);
     border-radius: 50px;
     box-shadow: 0px 0px 10px var(--shadow-color);
@@ -341,26 +341,29 @@
 
 .body__side-text-area-container{
     margin-top: 30px;
-    height: 60%;
-    position: relative;  
+    height: 100%;
+    position: relative;
 }
 
 #body__side-text-area{
     width: 100%;
-    height: 100%;
-    padding: 15px;
-    padding-top: 5px;
+    min-height: 100%;
+    height: 160px;
+    padding: 5px 15px;
     font-size: 1.2rem;
-    border-bottom: 3px solid var(--shadow-color);
     position: relative;
-    resize: none;
     font-weight: 500;
     font-size: 1.4rem;
-
-    border-bottom-left-radius: 2px;
-    border-bottom-right-radius: 2px;
-    border-top-left-radius: 2px;
+    border-top: 3px solid rgba(2, 2, 2, 0.6);
+    opacity: 0.5;
+    transition: opacity 0.3s;
+    overflow-y: auto;
+    border-bottom-right-radius: 10px;
     scroll-behavior: smooth;      
+}
+
+#body__side-text-area:hover{
+    opacity: 1;
 }
 
 #body__side-text-area::-webkit-scrollbar {
@@ -378,6 +381,24 @@
     padding: 0px 5px 0px 15px;
     border-top-left-radius: 50px;
     font-size: 1.1rem;
+}
+
+.body__side-text-item{
+    border-bottom: 3px solid var(--theme-color);
+    border-radius: 10px;
+    padding: 5px 15px;
+    margin-bottom: 10px;
+    box-shadow: 0px 0px 2px var(--shadow-color);
+}
+
+.body__side-text-item__steps {
+    color: var(--theme-color);
+    display: block;
+    font-size: 1.6rem;
+}
+
+.body__side-text-item__content{
+    margin-top: 5px;
 }
 
 .body__sidebar {

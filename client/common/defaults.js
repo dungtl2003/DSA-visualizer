@@ -13,6 +13,8 @@ import {drawColumns} from "./column.js";
 const sliderDefaultValue = 5;
 const sliderMaxCols = 25;
 const sliderMinCols = 5;
+const maxSpeed = 100;
+const minSpeed = 20000;
 
 const colsNumberDisplay = document.getElementById("body__sidebar__col-num");
 const slider = document.getElementById("body__sidebar__slider");
@@ -28,4 +30,4 @@ colsNumberDisplay.setAttribute("value", sliderDefaultValue);
 
 drawColumns(sliderDefaultValue);
 
-export {sliderDefaultValue, sliderMinCols, sliderMaxCols};
+export {sliderDefaultValue, sliderMinCols, sliderMaxCols, minSpeed, maxSpeed};

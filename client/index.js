@@ -3,20 +3,18 @@
 import {sliderDefaultValue} from "./common/defaults.js";
 import {drawColumns, shuffleColumns} from "./common/column.js";
 import mergesort from "./components/sort/mergesort.js";
-import mergesortAmination from "./animations/sort/mergesort.js";
-import {getValidColNumber} from "./common/utils.js";
+import {animation, setDuration} from "./animations/sort/mergesort.js";
+import {getValidColNumber, getValidSpeed} from "./common/utils.js";
 
 const slider = document.getElementById("body__sidebar__slider");
 const colNumberDisplay = document.getElementById("body__sidebar__col-num");
+const sortingSpeed = document.getElementById("body__sidebar__animate-speed");
 const columnContainer = document.getElementById(
     "body__main-content__display__frame"
 );
 const btnSolve = document.getElementById("body__sidebar__btn-item--solve");
 const btnShuffle = document.getElementById("body__sidebar__btn-item--shuffle");
-const sidebarForm = document.getElementById("body__sidebar__form");
-const colNumForm = document.getElementById(
-    "body__sidebar__param-display__form"
-);
+const formSubAborted = document.querySelectorAll(".abort-from-submission");
 const btnBodyScrollLeft = document.getElementById(
     "body__main-content__scroll-btn--left"
 );
@@ -31,6 +29,8 @@ const btnHeaderScrollLeft = document.getElementById(
 const btnHeaderScrollRight = document.getElementById(
     "header__catebar__scroll-btn--right"
 );
+const logsScreen = document.getElementById("body__side-text-area");
+const movesDisplay = document.getElementById("body__sidebar__moves-num");
 const bodyScrollableValue =
     Math.ceil(bodyScrollBar.scrollWidth) - Math.ceil(bodyScrollBar.clientWidth);
 let curColNumber = sliderDefaultValue;
@@ -48,12 +48,17 @@ window.onpageshow = function (event) {
     }
 };
 
+// Clear logs
+const clearLogs = function () {
+    logsScreen.replaceChildren();
+    movesDisplay.innerHTML = 0;
+};
+
 // Prevent form from submitting
-colNumForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-});
-sidebarForm.addEventListener("submit", (event) => {
-    event.preventDefault();
+formSubAborted.forEach((form) => {
+    form.addEventListener("submit", (event) => {
+        event.preventDefault();
+    });
 });
 
 // Slider to change the number of columns
@@ -63,6 +68,8 @@ slider.oninput = function () {
 };
 slider.onchange = function () {
     if (isSolving) {
+        clearLogs();
+
         abortController.abort();
         isSolving = false;
         abortController = null;
@@ -76,6 +83,8 @@ slider.onchange = function () {
 colNumberDisplay.addEventListener("keydown", function (e) {
     if (e.key === "Enter") {
         if (isSolving) {
+            clearLogs();
+
             abortController.abort();
             isSolving = false;
             abortController = null;
@@ -84,8 +93,26 @@ colNumberDisplay.addEventListener("keydown", function (e) {
         curColNumber = getValidColNumber();
         colNumberDisplay.value = curColNumber.toString();
         slider.value = curColNumber.toString();
+        colNumberDisplay.blur();
         drawColumns(curColNumber);
         mouseHoverColumnEvent();
+    }
+});
+
+// Change the animation's speed
+sortingSpeed.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+        if (isSolving) {
+            clearLogs();
+
+            abortController.abort();
+            isSolving = false;
+            abortController = null;
+        }
+        const validSpeed = getValidSpeed();
+        setDuration(validSpeed);
+        sortingSpeed.value = validSpeed.toString();
+        sortingSpeed.blur();
     }
 });
 
@@ -94,6 +121,7 @@ btnSolve.addEventListener("click", async function () {
     // It is solving, do not solve again
     if (isSolving) return;
 
+    clearLogs();
     isSolving = true;
     abortController = new AbortController();
     const values = [];
@@ -103,7 +131,7 @@ btnSolve.addEventListener("click", async function () {
         );
     }
     const instructions = mergesort(values);
-    mergesortAmination(instructions, abortController.signal)
+    animation(instructions, abortController.signal)
         .then(() => {
             isSolving = false;
             abortController = null;
@@ -117,6 +145,8 @@ btnSolve.addEventListener("click", async function () {
 // Shuffle the columns with animations
 btnShuffle.addEventListener("click", function () {
     if (isSolving) {
+        clearLogs();
+
         abortController.abort();
         isSolving = false;
         abortController = null;
