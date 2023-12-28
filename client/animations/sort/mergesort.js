@@ -30,7 +30,6 @@ const flashColumnColor = function (column, color) {
     const timeoutId = setTimeout(() => {
         changeColumnColor(column, color);
     }, duration / 2);
-
     signal.addEventListener("abort", () => {
         clearTimeout(timeoutId);
         if (
@@ -41,6 +40,15 @@ const flashColumnColor = function (column, color) {
             changeColumnColor(column, color);
         }
     });
+};
+
+/**
+ * Change the duration when flashing column color
+ * @param {Number} speed     The duration of color changing
+ * @returns {void}
+ */
+const setDuration = function (speed) {
+    duration = speed;
 };
 
 /**
@@ -118,6 +126,36 @@ const merge = function (instruction, columns) {
 };
 
 /**
+ * Display logs to textarea
+ * @param   {Object}                  instruction   The instruction to animate
+ * @returns {void}
+ */
+const updateLogs = function (instruction) {
+    console.log("run logs");
+    const messageHeader = document.createElement("span");
+    messageHeader.setAttribute("class", "body__side-text-item__steps");
+    const stepLine = "Step " + step + " : ";
+    messageHeader.innerHTML = stepLine;
+
+    const messageContent = document.createElement("div");
+    messageContent.setAttribute("class", "body__side-text-item__content");
+    messageContent.innerHTML = instruction.message;
+
+    const messageItem = document.createElement("div");
+    messageItem.setAttribute("class", "body__side-text-item");
+    messageItem.appendChild(messageHeader);
+    messageItem.appendChild(messageContent);
+
+    logsScreen.appendChild(messageItem);
+    logsScreen.scrollTop = logsScreen.scrollHeight;
+    if (instruction.isAMove) movesDisplay.innerHTML = ++moves;
+    step++;
+    console.log(messageHeader);
+    console.log(messageItem);
+    console.log(logsScreen);
+};
+
+/**
  * Handle animation following the `instruction`
  * @param   {Object}        instruction   The instruction to animate
  * @returns {Promise}
@@ -126,6 +164,8 @@ const handle = async function (instruction) {
     let columns = columnContainer.children;
 
     return new Promise((resolve) => {
+        console.log("handle");
+        updateLogs(instruction);
         switch (instruction.type) {
             case "divide":
                 divide(instruction, columns);
@@ -157,10 +197,11 @@ const handle = async function (instruction) {
 const animation = async function (instructions, abortSignal) {
     if (!drawColumn) return;
     signal = abortSignal;
-
+    step = 1;
+    moves = 0;
     for (const instruction of instructions) {
         await handle(instruction);
     }
 };
 
-export default animation;
+export {animation, setDuration};

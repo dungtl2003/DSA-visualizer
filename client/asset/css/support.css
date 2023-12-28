@@ -59,3 +59,24 @@
     left: 0;
     top: -14px;
 }  */
+
+.type-selection__item--activate{
+    background-color: black !important;
+}
+
+.header__catebar__item--activate{
+    background-color: var(--theme-color) !important;
+    color: var(--white-color) !important;
+}
+
+.header__navbar__selection-item--activate{
+    background-color: var(--theme-color);
+    color: var(--white-color);
+    border-radius: 50px !important;
+    padding: 6px 10px !important;
+}
+
+.header__navbar__selection-item--activate:hover{
+    background-color: var(--color-1) !important;
+}
+

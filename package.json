@@ -7,6 +7,7 @@
     "scripts": {
         "test": "echo \"no test specified\"",
         "prepare": "husky install",
+        "build:dev": "webpack --config webpack.dev.config.js",
         "build:prod": "webpack --config webpack.prod.config.js",
         "frontend:dev": "webpack serve --config webpack.dev.config.js --hot"
     },
