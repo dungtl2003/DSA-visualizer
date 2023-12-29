@@ -1,0 +1,59 @@
+:root {
+    --theme-color: #04aa6d;
+    --shadow-color: #57a474;
+    --text-color: #ccc;
+    --white-color: #e7e9eb;
+    --black-color: #282a35;
+    --color-1: #059862;
+
+    --header__navbar-height: 45px;
+    --header__catebar-height: calc(75px - var(--header__navbar-height));
+    --body__main-content-width: 70%;
+    --body__sidebar-width: calc(100% - var(--body__main-content-width));
+}
+
+html {
+    font-size: 62.5%;
+    line-height: 1.6rem;
+    font-family: "Robuto", sans-serif;
+    box-sizing: border-box;
+}
+
+* {
+    box-sizing: inherit;
+}
+
+.default-btn {
+    background-color: #04aa6d;
+    color: #fff;
+    border: none;
+    padding: 6px 8px;
+    opacity: 0.8;
+    cursor: pointer;
+    border-radius: 10%;
+    font-size: 1.4rem;
+}
+
+.default-btn:hover {
+    opacity: 1;
+}
+
+.scroll-btn{
+    position: absolute;
+    transition: color .3s;
+    cursor: pointer;
+}
+
+.scroll-btn:hover {
+    color: white !important;
+}
+
+.scroll-btn--right {
+    right: 0;
+    background: linear-gradient(to right, transparent, #2e2e41 80%);
+}
+
+.scroll-btn--left {
+    left: 0;
+    background: linear-gradient(to left, transparent, #2e2e41 80%);
+}

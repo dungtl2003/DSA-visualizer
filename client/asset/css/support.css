@@ -1,0 +1,77 @@
+.body__main-content__display__col--turn-red{
+    background-color: red !important;
+    box-shadow: 0 0 10px rgba(239, 98, 85, 0.8)!important;
+}
+
+.body__main-content__display__col--turn-red:hover{
+    background-color: #ef6255 !important;
+    box-shadow: 0 0 10px rgba(239, 131, 185, 0.5)!important;
+}
+
+.body__main-content__display__col--turn-blue{
+    background-color: rgb(0, 115, 255) !important;
+    box-shadow: 0 0 10px rgba(85, 95, 239, 0.8)!important;
+}
+
+.body__main-content__display__col--turn-yellow{
+    background-color: rgb(255, 183, 0) !important;
+    box-shadow: 0 0 10px rgba(239, 234, 85, 0.8)!important;
+}
+
+.body__main-content__display__col--turn-green{
+    background-color: rgb(85, 239, 196) !important;
+    box-shadow: 0 0 10px rgba(87, 164, 116, 0.8)!important;
+}
+
+.presense{
+    visibility: visible !important;
+}
+
+#body__main-content__display__value {
+    position : absolute;
+    bottom : -40px;
+    color: var(--black-color);
+    border: 3px solid var(--theme-color);
+    border-radius: 10px;
+    padding: 0 2px;
+}
+
+#body__main-content__display__value::before{
+    content: "";
+    position: absolute;
+    border-width: 8px;
+    border-style: solid;
+    border-color: transparent transparent var(--theme-color) transparent;
+    top: -16px;
+} 
+
+/* #body__main-content__display__value::after{
+    content: "";
+    position: absolute;
+    border-width: 8px;
+    border-style: solid;
+    border-color: transparent transparent #55efc4 transparent;
+    left: 0;
+    top: -14px;
+}  */
+
+.type-selection__item--activate{
+    background-color: black !important;
+}
+
+.header__catebar__item--activate{
+    background-color: var(--theme-color) !important;
+    color: var(--white-color) !important;
+}
+
+.header__navbar__selection-item--activate{
+    background-color: var(--theme-color);
+    color: var(--white-color);
+    border-radius: 50px !important;
+    padding: 6px 10px !important;
+}
+
+.header__navbar__selection-item--activate:hover{
+    background-color: var(--color-1) !important;
+}
+

@@ -8,7 +8,7 @@ const config = {
     semi: true,
     singleQuote: false,
     trailingComma: "es5",
-    bracketSpacing: true,
+    bracketSpacing: false,
     bracketSameLine: false,
     arrowParens: "always",
     rangeStart: 0,
@@ -16,7 +16,7 @@ const config = {
     insertPragma: false,
     htmlWhitespaceSensitivity: "css",
     endOfLine: "lf",
-    embeddedLanguageFormatting: "auto",
+    embeddedLanguageFormatting: "off",
     singleAttributePerLine: false,
 };
 
