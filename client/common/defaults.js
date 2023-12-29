@@ -56,6 +56,7 @@ const init = function (values) {
     speedSlider.setAttribute("min", minSpeed);
     speedSlider.setAttribute("max", maxSpeed);
     speedSlider.setAttribute("step", speedStep);
+    speedSlider.setAttribute("value", defaultSpeed);
     speedNumberDisplay.setAttribute("value", defaultSpeed);
     setSpeed(1 / defaultSpeed);
 
