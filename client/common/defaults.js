@@ -11,10 +11,14 @@ import "../asset/css/reponsive.css";
 const sliderDefaultValue = 5;
 const sliderMaxCols = 25;
 const sliderMinCols = 5;
-const maxSpeed = 100;
-const minSpeed = 20000;
+const defaultSpeed = 1;
+const maxSpeed = 0.25;
+const minSpeed = 2;
 
 const colsNumberDisplay = document.getElementById("body__sidebar__col-num");
+const speedNumberDisplay = document.getElementById(
+    "body__sidebar__animate-speed"
+);
 const slider = document.getElementById("body__sidebar__slider");
 
 const getComponents = async function () {
@@ -32,6 +36,8 @@ const init = function (values) {
     let drawColumns;
     ({drawColumns} = values);
 
+    speedNumberDisplay.innerHTML = defaultSpeed;
+
     colsNumberDisplay.innerHTML = sliderDefaultValue;
     slider.setAttribute("value", sliderDefaultValue);
     slider.setAttribute("min", sliderMinCols);
@@ -44,4 +50,11 @@ const init = function (values) {
     drawColumns(sliderDefaultValue);
 };
 
-export {sliderDefaultValue, sliderMinCols, sliderMaxCols, minSpeed, maxSpeed};
+export {
+    sliderDefaultValue,
+    sliderMinCols,
+    sliderMaxCols,
+    defaultSpeed,
+    minSpeed,
+    maxSpeed,
+};

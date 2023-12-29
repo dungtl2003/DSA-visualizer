@@ -29,14 +29,16 @@ const movesDisplay = document.getElementById("body__sidebar__moves-num");
 const jump = 110;
 
 let sliderDefaultValue;
+let defaultSpeed;
 let drawColumns;
 let shuffleColumns;
 let mergesort;
 let animation;
-let setDuration;
+let setSpeed;
 let getValidColNumber;
 let getValidSpeed;
 let curColNumber;
+let curSpeedNumber;
 let bodyScrollBarValue = 0;
 let checkBodyScrollBtnClicked = false;
 let isSolving = false;
@@ -44,10 +46,12 @@ let isShuffling = false;
 let abortController = null;
 
 async function getComponents() {
-    const {sliderDefaultValue} = await import("./common/defaults.js");
+    const {sliderDefaultValue, defaultSpeed} = await import(
+        "./common/defaults.js"
+    );
     const {drawColumns, shuffleColumns} = await import("./common/column.js");
     const {default: mergesort} = await import("./components/sort/mergesort.js");
-    const {animation, setDuration} = await import(
+    const {animation, setSpeed} = await import(
         "./animations/sort/mergesort.js"
     );
     const {getValidColNumber, getValidSpeed} = await import(
@@ -56,6 +60,7 @@ async function getComponents() {
 
     return {
         sliderDefaultValue,
+        defaultSpeed,
         drawColumns,
         shuffleColumns,
         mergesort,
@@ -70,15 +75,19 @@ getComponents()
     .then((values) => {
         ({
             sliderDefaultValue,
+            defaultSpeed,
             drawColumns,
             shuffleColumns,
             mergesort,
             animation,
-            setDuration,
+            setSpeed,
             getValidColNumber,
             getValidSpeed,
         } = values);
+
         curColNumber = sliderDefaultValue;
+        curSpeedNumber = defaultSpeed;
+
         process();
     })
     .catch(
@@ -141,6 +150,10 @@ const process = function () {
             changeColAmount();
         }
     });
+    // Make sure if user does not press Enter, reset to previous value
+    colNumberDisplay.addEventListener("blur", function () {
+        colNumberDisplay.value = curColNumber.toString();
+    });
 
     // FIX: Change the animation's speed
     sortingSpeed.addEventListener("keydown", function (e) {
@@ -153,10 +166,15 @@ const process = function () {
                 abortController = null;
             }
             const validSpeed = getValidSpeed();
-            setDuration(validSpeed);
+            curSpeedNumber = validSpeed;
+            setSpeed(validSpeed);
             sortingSpeed.value = validSpeed.toString();
             sortingSpeed.blur();
         }
+    });
+    // Make sure if user does not press Enter, reset to previous value
+    sortingSpeed.addEventListener("blur", function () {
+        sortingSpeed.value = curSpeedNumber.toString();
     });
 
     // Solve with animations
