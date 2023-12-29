@@ -2,11 +2,10 @@ version: "3"
 
 services:
   nginx:
+    container_name: nginx_test
     build:
       context: .
     ports:
       - "8080:80"
-    env_file:
-      - ./.env/.production/nginx.env
     volumes:
       - ./dist:/app/dist
