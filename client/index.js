@@ -215,6 +215,19 @@ const process = function () {
                         "body__main-content__display__value"
                     );
                     valueElement.innerHTML = e.getAttribute("data-percentage");
+                    const rewriteContent = (mutationList) => {
+                        mutationList.forEach((mutationRecord) => {
+                            valueElement.innerHTML = Math.round(
+                                e.style.height.replace("%", "")
+                            );
+                        });
+                    };
+                    const observer = new MutationObserver(rewriteContent);
+                    observer.observe(e, {
+                        attributes: true,
+                        attributeFilter: ["style"],
+                    });
+
                     e.parentNode.appendChild(valueElement);
                 });
                 e.addEventListener("mouseout", function () {
