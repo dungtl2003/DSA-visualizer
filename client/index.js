@@ -40,6 +40,7 @@ let curColNumber;
 let bodyScrollBarValue = 0;
 let checkBodyScrollBtnClicked = false;
 let isSolving = false;
+let isShuffling = false;
 let abortController = null;
 
 async function getComponents() {
@@ -93,49 +94,22 @@ const process = function () {
         }
     };
 
+    // Prevent form from submitting
+    formSubAborted.forEach((form) => {
+        form.addEventListener("submit", (event) => {
+            event.preventDefault();
+        });
+    });
+
     // Clear logs
     const clearLogs = function () {
         logsScreen.replaceChildren();
         movesDisplay.innerHTML = 0;
     };
 
-    // Prevent form from submitting
-    formSubAborted.forEach((form) => {
-        form.addEventListener("submit", (event) => {
-            event.preventDefault();
-        });
-    });
-
-    // Slider to change the number of columns
-    slider.oninput = function () {
-        curColNumber = Number(this.value);
-        colNumberDisplay.value = this.value;
-    };
-    slider.onchange = function () {
-        if (isSolving) {
-            clearLogs();
-
-            abortController.abort();
-            isSolving = false;
-            abortController = null;
-        }
-        drawColumns(curColNumber);
-        mouseHoverColumnEvent();
-    };
-
-    // Prevent form from submitting
-    formSubAborted.forEach((form) => {
-        form.addEventListener("submit", (event) => {
-            event.preventDefault();
-        });
-    });
-
-    // Slider to change the number of columns
-    slider.oninput = function () {
-        curColNumber = Number(this.value);
-        colNumberDisplay.value = this.value;
-    };
-    slider.onchange = function () {
+    // Change the number of columns
+    const changeColAmount = function () {
+        isShuffling = false;
         if (isSolving) {
             clearLogs();
 
@@ -152,26 +126,23 @@ const process = function () {
         mouseHoverColumnEvent();
     };
 
+    // Slider to change the number of columns
+    slider.oninput = function () {
+        curColNumber = Number(this.value);
+        colNumberDisplay.value = this.value;
+    };
+    slider.onchange = function () {
+        changeColAmount();
+    };
+
     // Change the number of columns by typing instead of sliding
     colNumberDisplay.addEventListener("keydown", function (e) {
         if (e.key === "Enter") {
-            if (isSolving) {
-                clearLogs();
-
-                abortController.abort();
-                isSolving = false;
-                abortController = null;
-            }
-
-            curColNumber = getValidColNumber();
-            colNumberDisplay.value = curColNumber.toString();
-            slider.value = curColNumber.toString();
-            colNumberDisplay.blur();
-            drawColumns(curColNumber);
-            mouseHoverColumnEvent();
+            changeColAmount();
         }
     });
-    // Change the animation's speed
+
+    // FIX: Change the animation's speed
     sortingSpeed.addEventListener("keydown", function (e) {
         if (e.key === "Enter") {
             if (isSolving) {
@@ -191,6 +162,7 @@ const process = function () {
     // Solve with animations
     btnSolve.addEventListener("click", async function () {
         // It is solving, do not solve again
+        if (isShuffling) return;
         if (isSolving) return;
 
         clearLogs();
@@ -215,7 +187,9 @@ const process = function () {
     });
 
     // Shuffle the columns with animations
-    btnShuffle.addEventListener("click", function () {
+    btnShuffle.addEventListener("click", async function () {
+        if (isShuffling) return;
+
         if (isSolving) {
             clearLogs();
 
@@ -224,7 +198,9 @@ const process = function () {
             abortController = null;
         }
 
-        shuffleColumns(curColNumber);
+        isShuffling = true;
+        await shuffleColumns(curColNumber);
+        isShuffling = false;
     });
 
     // See value of hovered column
@@ -251,13 +227,13 @@ const process = function () {
     };
     mouseHoverColumnEvent();
 
+    // Scroll body navbar
     // Need to wait for the browser to render before calculating
     setTimeout(() => {
         const bodyScrollableValue =
             Math.ceil(bodyScrollBar.scrollWidth) -
             Math.ceil(bodyScrollBar.clientWidth);
 
-        // Scroll body navbar
         const iconVisibility = () => {
             btnBodyScrollLeft.style.display =
                 bodyScrollBarValue > 0 ? "block" : "none";

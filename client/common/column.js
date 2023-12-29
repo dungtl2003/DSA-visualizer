@@ -48,7 +48,7 @@ const drawColumn = function (column, duration) {
  * @param {Number} duration The duration of drawing each Column
  * @returns {void}
  */
-const drawColumns = function (
+const drawColumns = async function (
     columns,
     start = 10,
     end = 100,
@@ -75,6 +75,12 @@ const drawColumns = function (
             );
         });
     });
+
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve();
+        }, duration);
+    });
 };
 
 /**
@@ -85,7 +91,7 @@ const drawColumns = function (
  * @param {Number} duration The duration of shuffle column
  * @returns {void}
  */
-const shuffleColumns = function (
+const shuffleColumns = async function (
     columns,
     start = 10,
     end = 100,
@@ -105,6 +111,12 @@ const shuffleColumns = function (
         //draw
         drawColumn(e.childNodes[0], duration);
     }
+
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve();
+        }, duration);
+    });
 };
 
 export {drawColumn, drawColumns, shuffleColumns};

@@ -96,10 +96,10 @@ const merge = function (
             isAMove: true,
             p1: index1,
             p2: index2,
-            message: `Compare 2 columns:
-            Column 1 at index ${index1} with value ${src[index1]}
-            Column 2 at index ${index2} with value ${src[index2]}
-            Column 1 is ${compareLeftRight} column 2, choose column ${choosenOne}`,
+            message: `Compare 2 columns:\n
+            Column 1 at index ${index1} with value ${src[index1]}\n
+            Column 2 at index ${index2} with value ${src[index2]}\n
+            Column 1 is ${compareLeftRight} column 2, choose column ${choosenOne}\n`,
         });
     }
 
@@ -131,9 +131,9 @@ const merge = function (
         type: "merge",
         isAMove: false,
         start: start,
-        values: target.slice(start, end + 1),
-        message: `The merged result:
-        [${target.slice(start, end + 1).join(", ")}]`,
+        values: target.slice(start, Math.max(mid, end) + 1),
+        message: `The merged result:\n
+        [${target.slice(start, Math.max(mid, end) + 1).join(", ")}]`,
     });
 };
 
@@ -168,9 +168,9 @@ const conquer = function (instructions, src, target, h, nonDecrease = true) {
             start: start,
             mid: mid,
             end: end,
-            message: `Consider the 2 following sub-arrays:
-            [${firstSubArrayStr}]
-            [${secondSubArrayStr}]`,
+            message: `Consider the 2 following sub-arrays:\n
+            [${firstSubArrayStr}]\n
+            [${secondSubArrayStr}]\n`,
         });
 
         merge(instructions, src, target, start, mid, end, nonDecrease);
@@ -190,9 +190,9 @@ const conquer = function (instructions, src, target, h, nonDecrease = true) {
             start: start,
             mid: mid,
             end: end,
-            message: `Consider the 2 following sub-arrays:
-            [${firstSubArrayStr}]
-            [${secondSubArrayStr}]`,
+            message: `Consider the 2 following sub-arrays:\n
+            [${firstSubArrayStr}]\n
+            [${secondSubArrayStr}]\n`,
         });
 
         merge(instructions, src, target, start, mid, end, nonDecrease);
@@ -208,8 +208,8 @@ const conquer = function (instructions, src, target, h, nonDecrease = true) {
             start: start,
             mid: mid,
             end: end,
-            message: `Consider the following sub-array:
-            [${firstSubArrayStr}]`,
+            message: `Consider the following sub-array:\n
+            [${firstSubArrayStr}]\n`,
         });
 
         merge(instructions, src, target, start, mid, end, nonDecrease);
@@ -217,7 +217,9 @@ const conquer = function (instructions, src, target, h, nonDecrease = true) {
 };
 
 /**
- * Use merge sort algorithm for array of number (with no recursion), Time complexity = Space complexity = O(n)
+ * Use merge sort algorithm for array of number (with no recursion), Time complexity = O(n * log2n), Space complexity = O(n)
+ * This algorithm will optimize space by creating only 1 supported array, so the time complexity = O(2 * n)
+ * But time complexity will be O(n * log2n + n) because it takes 1 more time to move all results from supported array back to result array
  * @param   {Array<Number>} arr             The array you want to sort
  * @param   {Boolean}       nonDecrease     Determine the sort order of the array
  * @returns {Array<Object>} The instruction of how to mergesort given array
