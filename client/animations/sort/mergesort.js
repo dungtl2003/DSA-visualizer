@@ -1,6 +1,5 @@
 "use strict";
 
-const duration = 1500;
 const columnContainer = document.getElementById(
     "body__main-content__display__frame"
 );
@@ -13,9 +12,11 @@ const getComponents = async function () {
 };
 
 let drawColumn;
+let duration;
 let step;
 let moves;
 let signal = null;
+
 getComponents()
     .then((values) => {
         ({drawColumn} = values);
@@ -48,12 +49,12 @@ const flashColumnColor = function (column, color, duration) {
 };
 
 /**
- * Change the duration when flashing column color
- * @param {Number} speed     The duration of color changing
+ * Set the animation speed, 1 speed unit = 1 second
+ * @param {Number} speed The animation speed
  * @returns {void}
  */
-const setDuration = function (speed) {
-    duration = speed;
+const setSpeed = function (speed) {
+    duration = speed * 1000;
 };
 
 /**
@@ -213,4 +214,4 @@ const animation = async function (instructions, abortSignal) {
     }
 };
 
-export {animation, setDuration};
+export {animation, setSpeed};
