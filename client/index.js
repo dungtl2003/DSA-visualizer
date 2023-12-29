@@ -12,16 +12,6 @@ const formSubAborted = document.querySelectorAll(".abort-from-submission");
 const btnBodyScrollLeft = document.getElementById(
     "body__main-content__scroll-btn--left"
 );
-
-let sliderDefaultValue;
-let drawColumns;
-let shuffleColumns;
-let mergesort;
-let animation;
-let setDuration;
-let getValidColNumber;
-let getValidSpeed;
-
 const btnBodyScrollRight = document.getElementById(
     "body__main-content__scroll-btn--right"
 );
@@ -33,23 +23,31 @@ const btnHeaderScrollLeft = document.getElementById(
 const btnHeaderScrollRight = document.getElementById(
     "header__catebar__scroll-btn--right"
 );
+
 const logsScreen = document.getElementById("body__side-text-area");
 const movesDisplay = document.getElementById("body__sidebar__moves-num");
-const bodyScrollableValue =
-    Math.ceil(bodyScrollBar.scrollWidth) - Math.ceil(bodyScrollBar.clientWidth);
-let curColNumber = sliderDefaultValue;
-let bodyScrollBarValue = 0;
-let checkBodyScrollBtnClicked = false;
 const jump = 110;
 
+let sliderDefaultValue;
+let drawColumns;
+let shuffleColumns;
+let mergesort;
+let animation;
+let setDuration;
+let getValidColNumber;
+let getValidSpeed;
+let curColNumber;
+let bodyScrollBarValue = 0;
+let checkBodyScrollBtnClicked = false;
 let isSolving = false;
 let abortController = null;
 
 async function getComponents() {
     const {sliderDefaultValue} = await import("./common/defaults.js");
     const {drawColumns, shuffleColumns} = await import("./common/column.js");
+    const {default: mergesort} = await import("./components/sort/mergesort.js");
     const {animation, setDuration} = await import(
-        "./components/sort/mergesort.js"
+        "./animations/sort/mergesort.js"
     );
     const {getValidColNumber, getValidSpeed} = await import(
         "./common/utils.js"
@@ -126,11 +124,10 @@ const process = function () {
     };
 
     // Prevent form from submitting
-    colNumForm.addEventListener("submit", (event) => {
-        event.preventDefault();
-    });
-    sidebarForm.addEventListener("submit", (event) => {
-        event.preventDefault();
+    formSubAborted.forEach((form) => {
+        form.addEventListener("submit", (event) => {
+            event.preventDefault();
+        });
     });
 
     // Slider to change the number of columns
@@ -226,6 +223,8 @@ const process = function () {
             isSolving = false;
             abortController = null;
         }
+
+        shuffleColumns(curColNumber);
     });
 
     // See value of hovered column
@@ -252,48 +251,53 @@ const process = function () {
     };
     mouseHoverColumnEvent();
 
-    // Scroll body navbar
-    const iconVisibility = () => {
-        btnBodyScrollLeft.style.display =
-            bodyScrollBarValue > 0 ? "block" : "none";
-        btnBodyScrollRight.style.display =
-            bodyScrollableValue > bodyScrollBarValue ? "block" : "none";
-        checkBodyScrollBtnClicked = false;
-    };
+    // Need to wait for the browser to render before calculating
+    setTimeout(() => {
+        const bodyScrollableValue =
+            Math.ceil(bodyScrollBar.scrollWidth) -
+            Math.ceil(bodyScrollBar.clientWidth);
 
-    btnBodyScrollRight.addEventListener("click", () => {
-        bodyScrollBarValue =
-            bodyScrollBarValue + jump >= bodyScrollableValue
-                ? bodyScrollableValue
-                : bodyScrollBarValue + jump;
-        checkBodyScrollBtnClicked = true;
-        bodyScrollBar.scrollLeft += jump;
-    });
+        // Scroll body navbar
+        const iconVisibility = () => {
+            btnBodyScrollLeft.style.display =
+                bodyScrollBarValue > 0 ? "block" : "none";
+            btnBodyScrollRight.style.display =
+                bodyScrollableValue > bodyScrollBarValue ? "block" : "none";
+            checkBodyScrollBtnClicked = false;
+        };
 
-    btnBodyScrollLeft.addEventListener("click", () => {
-        bodyScrollBarValue =
-            bodyScrollBarValue - jump <= 0 ? 0 : bodyScrollBarValue - jump;
-        checkBodyScrollBtnClicked = true;
-        bodyScrollBar.scrollLeft -= jump;
-    });
+        btnBodyScrollRight.addEventListener("click", () => {
+            bodyScrollBarValue =
+                bodyScrollBarValue + jump >= bodyScrollableValue
+                    ? bodyScrollableValue
+                    : bodyScrollBarValue + jump;
+            checkBodyScrollBtnClicked = true;
+            bodyScrollBar.scrollLeft += jump;
+        });
 
-    bodyScrollBar.addEventListener("scroll", () => {
-        if (!checkBodyScrollBtnClicked) {
-            bodyScrollBarValue = Math.ceil(bodyScrollBar.scrollLeft);
-        }
-        if (bodyScrollBar.scrollLeft === bodyScrollBarValue) {
+        btnBodyScrollLeft.addEventListener("click", () => {
+            bodyScrollBarValue =
+                bodyScrollBarValue - jump <= 0 ? 0 : bodyScrollBarValue - jump;
+            checkBodyScrollBtnClicked = true;
+            bodyScrollBar.scrollLeft -= jump;
+        });
+
+        bodyScrollBar.addEventListener("scroll", () => {
+            if (!checkBodyScrollBtnClicked) {
+                bodyScrollBarValue = Math.ceil(bodyScrollBar.scrollLeft);
+            }
             iconVisibility();
-        }
-    });
+        });
 
-    iconVisibility();
+        iconVisibility();
 
-    // Scroll header navbar
-    btnHeaderScrollRight.addEventListener("click", () => {
-        headerScrollBar.scrollLeft += jump;
-    });
+        // Scroll header navbar
+        btnHeaderScrollRight.addEventListener("click", () => {
+            headerScrollBar.scrollLeft += jump;
+        });
 
-    btnHeaderScrollLeft.addEventListener("click", () => {
-        headerScrollBar.scrollLeft -= jump;
-    });
+        btnHeaderScrollLeft.addEventListener("click", () => {
+            headerScrollBar.scrollLeft -= jump;
+        });
+    }, 0);
 };

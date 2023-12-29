@@ -4,6 +4,8 @@ const duration = 1500;
 const columnContainer = document.getElementById(
     "body__main-content__display__frame"
 );
+const logsScreen = document.getElementById("body__side-text-area");
+const movesDisplay = document.getElementById("body__sidebar__moves-num");
 
 const getComponents = async function () {
     const {drawColumn} = await import("../../common/column.js");
@@ -11,6 +13,8 @@ const getComponents = async function () {
 };
 
 let drawColumn;
+let step;
+let moves;
 let signal = null;
 getComponents()
     .then((values) => {
@@ -131,7 +135,6 @@ const merge = function (instruction, columns) {
  * @returns {void}
  */
 const updateLogs = function (instruction) {
-    console.log("run logs");
     const messageHeader = document.createElement("span");
     messageHeader.setAttribute("class", "body__side-text-item__steps");
     const stepLine = "Step " + step + " : ";
@@ -150,9 +153,6 @@ const updateLogs = function (instruction) {
     logsScreen.scrollTop = logsScreen.scrollHeight;
     if (instruction.isAMove) movesDisplay.innerHTML = ++moves;
     step++;
-    console.log(messageHeader);
-    console.log(messageItem);
-    console.log(logsScreen);
 };
 
 /**
@@ -164,7 +164,6 @@ const handle = async function (instruction) {
     let columns = columnContainer.children;
 
     return new Promise((resolve) => {
-        console.log("handle");
         updateLogs(instruction);
         switch (instruction.type) {
             case "divide":
@@ -195,7 +194,7 @@ const handle = async function (instruction) {
  * @returns {void}
  */
 const animation = async function (instructions, abortSignal) {
-    if (!drawColumn) return;
+    if (drawColumn === undefined) return;
     signal = abortSignal;
     step = 1;
     moves = 0;

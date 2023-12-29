@@ -123,3 +123,4 @@ out
 
 # other
 .env/.production/nginx.env
+dist
