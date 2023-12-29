@@ -26,9 +26,10 @@ getComponents()
  * Change color of the column to `color` for `duration` time
  * @param   {HTMLLIElement} column      The column element
  * @param   {String}        color       Color to paint the column
+ * @param   {Number}        duration    color flashing duration
  * @returns {void}
  */
-const flashColumnColor = function (column, color) {
+const flashColumnColor = function (column, color, duration) {
     changeColumnColor(column, color);
 
     const timeoutId = setTimeout(() => {
@@ -74,10 +75,18 @@ const changeColumnColor = function (column, color) {
  */
 const compare = function (instruction, columns, color = "red") {
     if (instruction.p1 !== -1) {
-        flashColumnColor(columns[instruction.p1].childNodes[0], color);
+        flashColumnColor(
+            columns[instruction.p1].childNodes[0],
+            color,
+            duration
+        );
     }
     if (instruction.p2 !== -1) {
-        flashColumnColor(columns[instruction.p2].childNodes[0], color);
+        flashColumnColor(
+            columns[instruction.p2].childNodes[0],
+            color,
+            duration
+        );
     }
 };
 
@@ -100,11 +109,11 @@ const divide = function (
     const end = instruction.end;
 
     for (let i = start; i <= mid; i++) {
-        flashColumnColor(columns[i].childNodes[0], color1);
+        flashColumnColor(columns[i].childNodes[0], color1, duration);
     }
 
     for (let i = mid + 1; i <= end; i++) {
-        flashColumnColor(columns[i].childNodes[0], color2);
+        flashColumnColor(columns[i].childNodes[0], color2, duration);
     }
 };
 
@@ -125,6 +134,7 @@ const merge = function (instruction, columns) {
             "data-percentage",
             values[dataIndex++]
         );
+        flashColumnColor(columns[i].childNodes[0], "green", duration * 2);
         drawColumn(columns[i].childNodes[0], duration);
     }
 };

@@ -429,11 +429,12 @@
 }
 
 .body__sidebar__param-display {
-    margin: 5px auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
     text-align: center;
     display: flex;
-    width: 170px;
-    justify-content: space-between;
+    flex-direction: row;
+    justify-content: space-evenly;
 }
 
 #body__sidebar__param-display__form{
@@ -457,16 +458,17 @@
 }
 
 .slider {
-    display: block;
+    display: inline-block;
     appearance: none;
-    min-width: 200px;
+    min-width: 100px;
     height: 15px;
     background: var(--shadow-color);
-    opacity: 0.6;
-    transition: opacity 0.2s;
     border: 1px solid var(--text-color);
     margin: 10px auto;
     border-radius: 50px;
+
+    opacity: 0.6;
+    transition: opacity 0.2s;
 }
 
 .slider:hover {
