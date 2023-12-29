@@ -1,8 +1,9 @@
 "use strict";
 
-const slider = document.getElementById("body__sidebar__slider");
+const colsSlider = document.getElementById("body__sidebar__slider");
+const speedSlider = document.getElementById("body__sidebar__slider--speed");
 const colNumberDisplay = document.getElementById("body__sidebar__col-num");
-const sortingSpeed = document.getElementById("body__sidebar__animate-speed");
+const speedDisplay = document.getElementById("body__sidebar__animate-speed");
 const columnContainer = document.getElementById(
     "body__main-content__display__frame"
 );
@@ -36,9 +37,7 @@ let mergesort;
 let animation;
 let setSpeed;
 let getValidColNumber;
-let getValidSpeed;
 let curColNumber;
-let curSpeedNumber;
 let bodyScrollBarValue = 0;
 let checkBodyScrollBtnClicked = false;
 let isSolving = false;
@@ -54,9 +53,7 @@ async function getComponents() {
     const {animation, setSpeed} = await import(
         "./animations/sort/mergesort.js"
     );
-    const {getValidColNumber, getValidSpeed} = await import(
-        "./common/utils.js"
-    );
+    const {getValidColNumber} = await import("./common/utils.js");
 
     return {
         sliderDefaultValue,
@@ -65,9 +62,8 @@ async function getComponents() {
         shuffleColumns,
         mergesort,
         animation,
-        setDuration,
         getValidColNumber,
-        getValidSpeed,
+        setSpeed,
     };
 }
 // load the components
@@ -82,11 +78,10 @@ getComponents()
             animation,
             setSpeed,
             getValidColNumber,
-            getValidSpeed,
+            setSpeed,
         } = values);
 
         curColNumber = sliderDefaultValue;
-        curSpeedNumber = defaultSpeed;
 
         process();
     })
@@ -129,18 +124,19 @@ const process = function () {
 
         curColNumber = getValidColNumber();
         colNumberDisplay.value = curColNumber.toString();
-        slider.value = curColNumber.toString();
+        colsSlider.value = curColNumber.toString();
         colNumberDisplay.blur();
         drawColumns(curColNumber);
         mouseHoverColumnEvent();
     };
 
     // Slider to change the number of columns
-    slider.oninput = function () {
+    colsSlider.oninput = function () {
+        console.log("Slider to change the number of columns");
         curColNumber = Number(this.value);
         colNumberDisplay.value = this.value;
     };
-    slider.onchange = function () {
+    colsSlider.onchange = function () {
         changeColAmount();
     };
 
@@ -155,27 +151,19 @@ const process = function () {
         colNumberDisplay.value = curColNumber.toString();
     });
 
-    // FIX: Change the animation's speed
-    sortingSpeed.addEventListener("keydown", function (e) {
-        if (e.key === "Enter") {
-            if (isSolving) {
-                clearLogs();
+    // Change the animation's speed
+    speedSlider.onchange = function () {
+        if (isSolving) {
+            clearLogs();
 
-                abortController.abort();
-                isSolving = false;
-                abortController = null;
-            }
-            const validSpeed = getValidSpeed();
-            curSpeedNumber = validSpeed;
-            setSpeed(validSpeed);
-            sortingSpeed.value = validSpeed.toString();
-            sortingSpeed.blur();
+            abortController.abort();
+            isSolving = false;
+            abortController = null;
         }
-    });
-    // Make sure if user does not press Enter, reset to previous value
-    sortingSpeed.addEventListener("blur", function () {
-        sortingSpeed.value = curSpeedNumber.toString();
-    });
+
+        speedDisplay.value = this.value;
+        setSpeed(1 / Number(this.value));
+    };
 
     // Solve with animations
     btnSolve.addEventListener("click", async function () {
