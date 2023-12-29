@@ -17,6 +17,21 @@
     align-items: center;
 }
 
+.header__navbar__left-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#header__navbar__left-section__logo-container{
+    width: 70px;
+}
+
+.header__navbar__left-section__logo{
+    max-width: 40px;
+}
+
 .header__navbar__selection-container{
     height: fit-content;
     background-color: #d9eee1;
