@@ -1,6 +1,6 @@
 server {
-    listen ${PORT};
-    root ${ROOT}/dist;
+    listen 80;
+    root /app/dist;
 
     location / {
     }
