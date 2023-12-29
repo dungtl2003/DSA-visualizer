@@ -96,10 +96,10 @@ const merge = function (
             isAMove: true,
             p1: index1,
             p2: index2,
-            message: `Compare 2 columns:\n
-            Column 1 at index ${index1} with value ${src[index1]}\n
-            Column 2 at index ${index2} with value ${src[index2]}\n
-            Column 1 is ${compareLeftRight} column 2, choose column ${choosenOne}\n`,
+            message: `Compare 2 columns: </br>
+            Column 1 at index ${index1} with value ${src[index1]} </br>
+            Column 2 at index ${index2} with value ${src[index2]} </br>
+            Column 1 is ${compareLeftRight} column 2, choose column ${choosenOne} </br>`,
         });
     }
 
@@ -132,8 +132,8 @@ const merge = function (
         isAMove: false,
         start: start,
         values: target.slice(start, Math.max(mid, end) + 1),
-        message: `The merged result:\n
-        [${target.slice(start, Math.max(mid, end) + 1).join(", ")}]`,
+        message: `The merged result: </br>
+        [${target.slice(start, Math.max(mid, end) + 1).join(", ")}] </br>`,
     });
 };
 
@@ -168,9 +168,9 @@ const conquer = function (instructions, src, target, h, nonDecrease = true) {
             start: start,
             mid: mid,
             end: end,
-            message: `Consider the 2 following sub-arrays:\n
-            [${firstSubArrayStr}]\n
-            [${secondSubArrayStr}]\n`,
+            message: `Consider the 2 following sub-arrays: </br>
+            [${firstSubArrayStr}] </br>
+            [${secondSubArrayStr}] </br>`,
         });
 
         merge(instructions, src, target, start, mid, end, nonDecrease);
@@ -190,9 +190,9 @@ const conquer = function (instructions, src, target, h, nonDecrease = true) {
             start: start,
             mid: mid,
             end: end,
-            message: `Consider the 2 following sub-arrays:\n
-            [${firstSubArrayStr}]\n
-            [${secondSubArrayStr}]\n`,
+            message: `Consider the 2 following sub-arrays: </br>
+            [${firstSubArrayStr}] </br>
+            [${secondSubArrayStr}] </br>`,
         });
 
         merge(instructions, src, target, start, mid, end, nonDecrease);
@@ -208,8 +208,8 @@ const conquer = function (instructions, src, target, h, nonDecrease = true) {
             start: start,
             mid: mid,
             end: end,
-            message: `Consider the following sub-array:\n
-            [${firstSubArrayStr}]\n`,
+            message: `Consider the following sub-array: </br>
+            [${firstSubArrayStr}] </br>`,
         });
 
         merge(instructions, src, target, start, mid, end, nonDecrease);
