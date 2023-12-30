@@ -8,6 +8,7 @@ import "../asset/css/main.css";
 import "../asset/css/support.css";
 import "../asset/css/reponsive.css";
 import image from "../asset/img/logo.png";
+
 const defaultCols = 5;
 const maxCols = 25;
 const minCols = 5;
@@ -48,6 +49,7 @@ const init = function (values) {
     colNumberSlider.setAttribute("value", defaultCols);
     colNumberSlider.setAttribute("min", minCols);
     colNumberSlider.setAttribute("max", maxCols);
+    drawColumns(defaultCols);
 
     colsNumberDisplay.setAttribute("min", minCols);
     colsNumberDisplay.setAttribute("max", maxCols);
@@ -57,10 +59,10 @@ const init = function (values) {
     speedSlider.setAttribute("max", maxSpeed);
     speedSlider.setAttribute("step", speedStep);
     speedSlider.setAttribute("value", defaultSpeed);
-    speedNumberDisplay.setAttribute("value", defaultSpeed);
     setSpeed(1 / defaultSpeed);
 
-    drawColumns(defaultCols);
+    speedNumberDisplay.setAttribute("value", defaultSpeed);
+
     const icon = document.createElement("img");
     icon.setAttribute("src", image);
     icon.setAttribute("class", "header__navbar__left-section__logo");
