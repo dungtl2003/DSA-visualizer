@@ -151,6 +151,10 @@ const process = function () {
     });
 
     // Change the animation's speed
+    speedSlider.oninput = function () {
+        speedDisplay.value = this.value;
+    };
+
     speedSlider.onchange = function () {
         if (isSolving) {
             clearLogs();
