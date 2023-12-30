@@ -32,6 +32,7 @@ const config = {
         new HtmlWebpackPlugin({
             filename: "index.html",
             template: "client/index.html",
+            favicon: "./client/asset/img/favicon.png",
         }),
         new MiniCssExtractPlugin({
             filename: "styles.[contenthash].css",

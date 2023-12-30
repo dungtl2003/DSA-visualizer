@@ -44,6 +44,18 @@ let isSolving = false;
 let isShuffling = false;
 let abortController = null;
 
+document.querySelectorAll(".function-coming-soon").forEach((e) => {
+    e.addEventListener("click", function () {
+        document.getElementById("alert-screen").style.display = "flex";
+    });
+});
+
+document
+    .getElementById("alert-panel__confirm")
+    .addEventListener("click", function () {
+        document.getElementById("alert-screen").style.display = "none";
+    });
+
 async function getComponents() {
     const {sliderDefaultValue, defaultSpeed} = await import(
         "./common/defaults.js"
@@ -132,7 +144,6 @@ const process = function () {
 
     // Slider to change the number of columns
     colsSlider.oninput = function () {
-        console.log("Slider to change the number of columns");
         curColNumber = Number(this.value);
         colNumberDisplay.value = this.value;
     };
@@ -152,6 +163,10 @@ const process = function () {
     });
 
     // Change the animation's speed
+    speedSlider.oninput = function () {
+        speedDisplay.value = this.value;
+    };
+
     speedSlider.onchange = function () {
         if (isSolving) {
             clearLogs();
