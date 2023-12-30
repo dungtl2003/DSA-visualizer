@@ -132,7 +132,6 @@ const process = function () {
 
     // Slider to change the number of columns
     colsSlider.oninput = function () {
-        console.log("Slider to change the number of columns");
         curColNumber = Number(this.value);
         colNumberDisplay.value = this.value;
     };
