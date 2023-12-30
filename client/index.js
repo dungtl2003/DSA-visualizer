@@ -44,6 +44,18 @@ let isSolving = false;
 let isShuffling = false;
 let abortController = null;
 
+document.querySelectorAll(".function-coming-soon").forEach((e) => {
+    e.addEventListener("click", function () {
+        document.getElementById("alert-screen").style.display = "flex";
+    });
+});
+
+document
+    .getElementById("alert-panel__confirm")
+    .addEventListener("click", function () {
+        document.getElementById("alert-screen").style.display = "none";
+    });
+
 async function getComponents() {
     const {sliderDefaultValue, defaultSpeed} = await import(
         "./common/defaults.js"
@@ -170,7 +182,6 @@ const process = function () {
 
     // Solve with animations
     btnSolve.addEventListener("click", async function () {
-        window.alert("Comming soon...");
         // It is solving, do not solve again
         if (isShuffling) return;
         if (isSolving) return;
