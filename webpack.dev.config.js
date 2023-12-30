@@ -41,7 +41,7 @@ const config = {
         new HtmlWebpackPlugin({
             filename: "index.html",
             template: "client/index.html",
-            favicon: "./client/asset/img/favicon.ico",
+            favicon: "./client/asset/img/favicon.png",
         }),
     ],
 };
