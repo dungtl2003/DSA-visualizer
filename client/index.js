@@ -167,6 +167,7 @@ const process = function () {
 
     // Solve with animations
     btnSolve.addEventListener("click", async function () {
+        window.alert("Comming soon...");
         // It is solving, do not solve again
         if (isShuffling) return;
         if (isSolving) return;
