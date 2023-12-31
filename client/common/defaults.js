@@ -3,12 +3,6 @@
  */
 "use strict";
 
-import "../asset/css/base.css";
-import "../asset/css/main.css";
-import "../asset/css/support.css";
-import "../asset/css/reponsive.css";
-import image from "../asset/img/logo.png";
-
 const defaultCols = 5;
 const maxCols = 25;
 const minCols = 5;
@@ -23,9 +17,6 @@ const speedNumberDisplay = document.getElementById(
 );
 const colNumberSlider = document.getElementById("body__sidebar__slider");
 const speedSlider = document.getElementById("body__sidebar__slider--speed");
-const iconContainer = document.getElementById(
-    "header__navbar__left-section__logo-container"
-);
 
 const getComponents = async function () {
     const {drawColumns} = await import("./column.js");
@@ -62,12 +53,6 @@ const init = function (values) {
     setSpeed(1 / defaultSpeed);
 
     speedNumberDisplay.setAttribute("value", defaultSpeed);
-
-    const icon = document.createElement("img");
-    icon.setAttribute("src", image);
-    icon.setAttribute("class", "header__navbar__left-section__logo");
-    icon.setAttribute("alt", "logo.img");
-    iconContainer.appendChild(icon);
 };
 
 export {
