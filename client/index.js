@@ -1,5 +1,21 @@
 "use strict";
 
+// style
+import "./asset/css/base.css";
+import "./asset/css/main.css";
+import "./asset/css/support.css";
+import "./asset/css/reponsive.css";
+import image from "./asset/img/logo.png";
+
+const iconContainer = document.getElementById(
+    "header__navbar__left-section__logo-container"
+);
+const icon = document.createElement("img");
+icon.setAttribute("src", image);
+icon.setAttribute("class", "header__navbar__left-section__logo");
+icon.setAttribute("alt", "logo.img");
+iconContainer.appendChild(icon);
+
 const colsSlider = document.getElementById("body__sidebar__slider");
 const speedSlider = document.getElementById("body__sidebar__slider--speed");
 const colNumberDisplay = document.getElementById("body__sidebar__col-num");
@@ -30,7 +46,6 @@ const movesDisplay = document.getElementById("body__sidebar__moves-num");
 const jump = 110;
 
 let sliderDefaultValue;
-let defaultSpeed;
 let drawColumns;
 let shuffleColumns;
 let mergesort;
