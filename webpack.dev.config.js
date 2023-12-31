@@ -26,7 +26,10 @@ const config = {
     },
     module: {
         rules: [
-            {test: /\.css$/, use: ["style-loader", "css-loader"]},
+            {
+                test: /\.css$/,
+                use: ["style-loader", "css-loader"],
+            },
             {
                 test: /\.(woff|woff2|eot|ttf|otf)$/i,
                 type: "asset/resource",
@@ -41,6 +44,7 @@ const config = {
         new HtmlWebpackPlugin({
             filename: "index.html",
             template: "client/index.html",
+            favicon: "./client/asset/img/favicon.png",
         }),
     ],
 };

@@ -11,7 +11,7 @@ const config = {
         app: "./client/index.js",
     },
     output: {
-        filename: "[name].[contenthash].bundle.js",
+        filename: "assets/js/[name].[contenthash].bundle.js",
         path: __dirname + "/dist",
         clean: true,
     },
@@ -21,10 +21,16 @@ const config = {
             {
                 test: /\.(woff|woff2|eot|ttf|otf)$/i,
                 type: "asset/resource",
+                generator: {
+                    filename: "assets/fonts/[hash][ext][query]",
+                },
             },
             {
                 test: /\.(jpe?g|png|gif|svg)$/i,
                 type: "asset/resource",
+                generator: {
+                    filename: "assets/images/[hash][ext][query]",
+                },
             },
         ],
     },
@@ -32,9 +38,10 @@ const config = {
         new HtmlWebpackPlugin({
             filename: "index.html",
             template: "client/index.html",
+            favicon: "./client/asset/img/favicon.png",
         }),
         new MiniCssExtractPlugin({
-            filename: "styles.[contenthash].css",
+            filename: "assets/styles/[contenthash].css",
         }),
     ],
 };

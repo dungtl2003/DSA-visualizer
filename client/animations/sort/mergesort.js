@@ -1,6 +1,5 @@
 "use strict";
 
-const duration = 1500;
 const columnContainer = document.getElementById(
     "body__main-content__display__frame"
 );
@@ -13,9 +12,11 @@ const getComponents = async function () {
 };
 
 let drawColumn;
+let duration;
 let step;
 let moves;
 let signal = null;
+
 getComponents()
     .then((values) => {
         ({drawColumn} = values);
@@ -26,9 +27,10 @@ getComponents()
  * Change color of the column to `color` for `duration` time
  * @param   {HTMLLIElement} column      The column element
  * @param   {String}        color       Color to paint the column
+ * @param   {Number}        duration    color flashing duration
  * @returns {void}
  */
-const flashColumnColor = function (column, color) {
+const flashColumnColor = function (column, color, duration) {
     changeColumnColor(column, color);
 
     const timeoutId = setTimeout(() => {
@@ -47,12 +49,12 @@ const flashColumnColor = function (column, color) {
 };
 
 /**
- * Change the duration when flashing column color
- * @param {Number} speed     The duration of color changing
+ * Set the animation speed, 1 speed unit = 1 second
+ * @param {Number} speed The animation speed
  * @returns {void}
  */
-const setDuration = function (speed) {
-    duration = speed;
+const setSpeed = function (speed) {
+    duration = speed * 1000;
 };
 
 /**
@@ -74,10 +76,18 @@ const changeColumnColor = function (column, color) {
  */
 const compare = function (instruction, columns, color = "red") {
     if (instruction.p1 !== -1) {
-        flashColumnColor(columns[instruction.p1].childNodes[0], color);
+        flashColumnColor(
+            columns[instruction.p1].childNodes[0],
+            color,
+            duration
+        );
     }
     if (instruction.p2 !== -1) {
-        flashColumnColor(columns[instruction.p2].childNodes[0], color);
+        flashColumnColor(
+            columns[instruction.p2].childNodes[0],
+            color,
+            duration
+        );
     }
 };
 
@@ -100,11 +110,11 @@ const divide = function (
     const end = instruction.end;
 
     for (let i = start; i <= mid; i++) {
-        flashColumnColor(columns[i].childNodes[0], color1);
+        flashColumnColor(columns[i].childNodes[0], color1, duration);
     }
 
     for (let i = mid + 1; i <= end; i++) {
-        flashColumnColor(columns[i].childNodes[0], color2);
+        flashColumnColor(columns[i].childNodes[0], color2, duration);
     }
 };
 
@@ -125,6 +135,7 @@ const merge = function (instruction, columns) {
             "data-percentage",
             values[dataIndex++]
         );
+        flashColumnColor(columns[i].childNodes[0], "green", duration * 2);
         drawColumn(columns[i].childNodes[0], duration);
     }
 };
@@ -203,4 +214,4 @@ const animation = async function (instructions, abortSignal) {
     }
 };
 
-export {animation, setDuration};
+export {animation, setSpeed};

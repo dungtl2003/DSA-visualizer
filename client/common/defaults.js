@@ -3,23 +3,26 @@
  */
 "use strict";
 
-import "../asset/font/fontawesome-free-6.4.2-web/css/all.min.css";
-import "../asset/css/base.css";
-import "../asset/css/main.css";
-import "../asset/css/support.css";
-import "../asset/css/reponsive.css";
-const sliderDefaultValue = 5;
-const sliderMaxCols = 25;
-const sliderMinCols = 5;
-const maxSpeed = 100;
-const minSpeed = 20000;
+const defaultCols = 5;
+const maxCols = 25;
+const minCols = 5;
+const defaultSpeed = 1;
+const maxSpeed = 2;
+const minSpeed = 0.25;
+const speedStep = 0.25;
 
 const colsNumberDisplay = document.getElementById("body__sidebar__col-num");
-const slider = document.getElementById("body__sidebar__slider");
+const speedNumberDisplay = document.getElementById(
+    "body__sidebar__animate-speed"
+);
+const colNumberSlider = document.getElementById("body__sidebar__slider");
+const speedSlider = document.getElementById("body__sidebar__slider--speed");
 
 const getComponents = async function () {
     const {drawColumns} = await import("./column.js");
-    return {drawColumns};
+    const {setSpeed} = await import("../animations/sort/mergesort.js");
+
+    return {drawColumns, setSpeed};
 };
 
 getComponents()
@@ -30,18 +33,33 @@ getComponents()
 
 const init = function (values) {
     let drawColumns;
-    ({drawColumns} = values);
+    let setSpeed;
+    ({drawColumns, setSpeed} = values);
 
-    colsNumberDisplay.innerHTML = sliderDefaultValue;
-    slider.setAttribute("value", sliderDefaultValue);
-    slider.setAttribute("min", sliderMinCols);
-    slider.setAttribute("max", sliderMaxCols);
+    colsNumberDisplay.innerHTML = defaultCols;
+    colNumberSlider.setAttribute("value", defaultCols);
+    colNumberSlider.setAttribute("min", minCols);
+    colNumberSlider.setAttribute("max", maxCols);
+    drawColumns(defaultCols);
 
-    colsNumberDisplay.setAttribute("min", sliderMinCols);
-    colsNumberDisplay.setAttribute("max", sliderMaxCols);
-    colsNumberDisplay.setAttribute("value", sliderDefaultValue);
+    colsNumberDisplay.setAttribute("min", minCols);
+    colsNumberDisplay.setAttribute("max", maxCols);
+    colsNumberDisplay.setAttribute("value", defaultCols);
 
-    drawColumns(sliderDefaultValue);
+    speedSlider.setAttribute("min", minSpeed);
+    speedSlider.setAttribute("max", maxSpeed);
+    speedSlider.setAttribute("step", speedStep);
+    speedSlider.setAttribute("value", defaultSpeed);
+    setSpeed(1 / defaultSpeed);
+
+    speedNumberDisplay.setAttribute("value", defaultSpeed);
 };
 
-export {sliderDefaultValue, sliderMinCols, sliderMaxCols, minSpeed, maxSpeed};
+export {
+    defaultCols as sliderDefaultValue,
+    minCols as sliderMinCols,
+    maxCols as sliderMaxCols,
+    defaultSpeed,
+    minSpeed,
+    maxSpeed,
+};

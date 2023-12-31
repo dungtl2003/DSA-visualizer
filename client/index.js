@@ -1,10 +1,25 @@
 "use strict";
 
-console.log("Hello world");
+// style
+import "./asset/css/base.css";
+import "./asset/css/main.css";
+import "./asset/css/support.css";
+import "./asset/css/reponsive.css";
+import image from "./asset/img/logo.png";
 
-const slider = document.getElementById("body__sidebar__slider");
+const iconContainer = document.getElementById(
+    "header__navbar__left-section__logo-container"
+);
+const icon = document.createElement("img");
+icon.setAttribute("src", image);
+icon.setAttribute("class", "header__navbar__left-section__logo");
+icon.setAttribute("alt", "logo.img");
+iconContainer.appendChild(icon);
+
+const colsSlider = document.getElementById("body__sidebar__slider");
+const speedSlider = document.getElementById("body__sidebar__slider--speed");
 const colNumberDisplay = document.getElementById("body__sidebar__col-num");
-const sortingSpeed = document.getElementById("body__sidebar__animate-speed");
+const speedDisplay = document.getElementById("body__sidebar__animate-speed");
 const columnContainer = document.getElementById(
     "body__main-content__display__frame"
 );
@@ -35,9 +50,8 @@ let drawColumns;
 let shuffleColumns;
 let mergesort;
 let animation;
-let setDuration;
+let setSpeed;
 let getValidColNumber;
-let getValidSpeed;
 let curColNumber;
 let bodyScrollBarValue = 0;
 let checkBodyScrollBtnClicked = false;
@@ -45,16 +59,26 @@ let isSolving = false;
 let isShuffling = false;
 let abortController = null;
 
+document.querySelectorAll(".function-coming-soon").forEach((e) => {
+    e.addEventListener("click", function () {
+        document.getElementById("alert-screen").style.display = "flex";
+    });
+});
+
+document
+    .getElementById("alert-panel__confirm")
+    .addEventListener("click", function () {
+        document.getElementById("alert-screen").style.display = "none";
+    });
+
 async function getComponents() {
     const {sliderDefaultValue} = await import("./common/defaults.js");
     const {drawColumns, shuffleColumns} = await import("./common/column.js");
     const {default: mergesort} = await import("./components/sort/mergesort.js");
-    const {animation, setDuration} = await import(
+    const {animation, setSpeed} = await import(
         "./animations/sort/mergesort.js"
     );
-    const {getValidColNumber, getValidSpeed} = await import(
-        "./common/utils.js"
-    );
+    const {getValidColNumber} = await import("./common/utils.js");
 
     return {
         sliderDefaultValue,
@@ -62,9 +86,8 @@ async function getComponents() {
         shuffleColumns,
         mergesort,
         animation,
-        setDuration,
         getValidColNumber,
-        getValidSpeed,
+        setSpeed,
     };
 }
 // load the components
@@ -76,11 +99,12 @@ getComponents()
             shuffleColumns,
             mergesort,
             animation,
-            setDuration,
             getValidColNumber,
-            getValidSpeed,
+            setSpeed,
         } = values);
+
         curColNumber = sliderDefaultValue;
+
         process();
     })
     .catch(
@@ -122,18 +146,18 @@ const process = function () {
 
         curColNumber = getValidColNumber();
         colNumberDisplay.value = curColNumber.toString();
-        slider.value = curColNumber.toString();
+        colsSlider.value = curColNumber.toString();
         colNumberDisplay.blur();
         drawColumns(curColNumber);
         mouseHoverColumnEvent();
     };
 
     // Slider to change the number of columns
-    slider.oninput = function () {
+    colsSlider.oninput = function () {
         curColNumber = Number(this.value);
         colNumberDisplay.value = this.value;
     };
-    slider.onchange = function () {
+    colsSlider.onchange = function () {
         changeColAmount();
     };
 
@@ -143,23 +167,28 @@ const process = function () {
             changeColAmount();
         }
     });
-
-    // FIX: Change the animation's speed
-    sortingSpeed.addEventListener("keydown", function (e) {
-        if (e.key === "Enter") {
-            if (isSolving) {
-                clearLogs();
-
-                abortController.abort();
-                isSolving = false;
-                abortController = null;
-            }
-            const validSpeed = getValidSpeed();
-            setDuration(validSpeed);
-            sortingSpeed.value = validSpeed.toString();
-            sortingSpeed.blur();
-        }
+    // Make sure if user does not press Enter, reset to previous value
+    colNumberDisplay.addEventListener("blur", function () {
+        colNumberDisplay.value = curColNumber.toString();
     });
+
+    // Change the animation's speed
+    speedSlider.oninput = function () {
+        speedDisplay.value = this.value;
+    };
+
+    speedSlider.onchange = function () {
+        if (isSolving) {
+            clearLogs();
+
+            abortController.abort();
+            isSolving = false;
+            abortController = null;
+        }
+
+        speedDisplay.value = this.value;
+        setSpeed(1 / Number(this.value));
+    };
 
     // Solve with animations
     btnSolve.addEventListener("click", async function () {
@@ -217,6 +246,19 @@ const process = function () {
                         "body__main-content__display__value"
                     );
                     valueElement.innerHTML = e.getAttribute("data-percentage");
+                    const rewriteContent = (mutationList) => {
+                        mutationList.forEach((mutationRecord) => {
+                            valueElement.innerHTML = Math.round(
+                                e.style.height.replace("%", "")
+                            );
+                        });
+                    };
+                    const observer = new MutationObserver(rewriteContent);
+                    observer.observe(e, {
+                        attributes: true,
+                        attributeFilter: ["style"],
+                    });
+
                     e.parentNode.appendChild(valueElement);
                 });
                 e.addEventListener("mouseout", function () {
