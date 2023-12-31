@@ -1,5 +1,7 @@
 "use strict";
 
+console.log("Hello world");
+
 const slider = document.getElementById("body__sidebar__slider");
 const colNumberDisplay = document.getElementById("body__sidebar__col-num");
 const sortingSpeed = document.getElementById("body__sidebar__animate-speed");
