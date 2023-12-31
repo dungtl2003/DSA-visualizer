@@ -72,9 +72,7 @@ document
     });
 
 async function getComponents() {
-    const {sliderDefaultValue, defaultSpeed} = await import(
-        "./common/defaults.js"
-    );
+    const {sliderDefaultValue} = await import("./common/defaults.js");
     const {drawColumns, shuffleColumns} = await import("./common/column.js");
     const {default: mergesort} = await import("./components/sort/mergesort.js");
     const {animation, setSpeed} = await import(
@@ -84,7 +82,6 @@ async function getComponents() {
 
     return {
         sliderDefaultValue,
-        defaultSpeed,
         drawColumns,
         shuffleColumns,
         mergesort,
@@ -98,12 +95,10 @@ getComponents()
     .then((values) => {
         ({
             sliderDefaultValue,
-            defaultSpeed,
             drawColumns,
             shuffleColumns,
             mergesort,
             animation,
-            setSpeed,
             getValidColNumber,
             setSpeed,
         } = values);
